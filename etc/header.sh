@@ -1,19 +1,15 @@
 cat<<EOF
 #!/usr/bin/env coffee
 # Copyright (c) 2011,2012 Tim Menzies, MIT License
-
 EOF
 banner $1 | sed 's/^/# /' 
 cat<<EOF
-
-# Version......... : `basename $2`
-# Built........... : $3
-
-# License notes... : see below.
-# Install notes... : see below.
-# For more info... : email tim@menzies.us
-# To report bugs.. : https://github.com/timm/coffee-mine/issues
-# For more doco... : read http://coffee-mine.blogspot.com around $3
+# Version ....... : `basename $2`
+# Built ......... : $3
+# License ....... : see below.
+# Installation .. : see below.
+# Report bugs ... : https://github.com/timm/coffee-mine/issues
+# For doco ...... : read http://coffee-mine.blogspot.com around $3
 EOF
 
 shift 3
@@ -26,6 +22,11 @@ for i in $*;do
 done 
 
 cat<<EOF
+# CREDITS
+# -------
+#
+# Tim Menzies tim@menzies.us
+#
 # INSTALL
 # -------
 # 0)  Essential first step: make yourself a cup of coffee.
@@ -36,8 +37,8 @@ cat<<EOF
 #
 #        chmod +x $1  # <=== On UNIX systems
 # 
-# 3)  Look for 'data/' in this file. Usually, its in the
-#     the last few lines. If you see any reference to such 
+# 3)  Look for 'data/' in this file. Usually, its the last few
+#     lines of code (above). If you see any reference to such 
 #     a data file, then...
 #     3a) Download those data files from
 #         http://now.unbox.org/all/trunk/doc/coffee-mine/data
