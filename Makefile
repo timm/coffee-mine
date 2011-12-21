@@ -7,7 +7,7 @@ File=$(shell git log --pretty=format:'' | wc -l)
 All=var/$x-$(File)
 Cake=$(MAKE) -B ready $(All)
 
-#MAKEFLAGS = -s
+MAKEFLAGS = -s
 
 run : $(patsubst %,lib/%.cof,$(uses)) $x.cof
 	echo ">> $^ $(File)"
