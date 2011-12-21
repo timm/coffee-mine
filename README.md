@@ -1,15 +1,22 @@
 README
 ======
 
-This code base builds stand-alone bundles of CoffeeScript code in the var/directory. 
+The most important thing you need to know about this code is that you can ignore most of it.
+
+All this code  builds stand-alone files of CoffeeScript code in the var/directory. 
+
+So to run this stuff, all you really need is one of the ./var files (and, if it uses
+any data, something from the ./data directory).
+
+As for the rest of it, that is just my private build environment which you can just ignore.
 
 Credits
 -------
 
 Tim Menzies, tim@menzies.us
 
-Install
--------
+Install Instruction
+-------------------
 
 To install any of the code in ./var/xxx
 
