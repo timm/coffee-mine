@@ -1,0 +1,17 @@
+nature is a joker. if you try to find patterns in data, you get confused. lots of things mixed up
+
+data mning = tricks to fix the mix
+
+and also, learning when the mix can't be fixed.
+
+tables, not relations
+rows, not instances or examples or cases
+cols, not attributes, variables
+scored, not classes
+acts, not controllable
+
+some cols are either scored or plain
+
+some plain are acts (things you can change)  
+
+
