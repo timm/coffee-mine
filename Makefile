@@ -20,6 +20,7 @@ run : $(patsubst %,lib/%.cof,$(uses)) $x.cof
 commit :
 	git commit -a -m stuff
 	git push origin master
+
 ready :
 	mkdir -p $(Dirs)
 
