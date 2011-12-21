@@ -1,0 +1,140 @@
+#!/usr/bin/env coffee
+# Copyright (c) 2011,2012 Tim Menzies, MIT License
+
+# 
+#   ####    ####   #    #
+#  #    #  #       #    #
+#  #        ####   #    #
+#  #            #  #    #
+#  #    #  #    #   #  #
+#   ####    ####     ##
+# 
+
+# Version......... : csv-8
+# Built........... : Tue Dec 20 23:27:48 EST 2011
+
+# License notes... : see below.
+# Install notes... : see below.
+# For more info... : email tim@menzies.us
+# To report bugs.. : https://github.com/timm/coffee-mine/issues
+# For more doco... : read http://coffee-mine.blogspot.com around Tue Dec 20 23:27:48 EST 2011
+ 
+#--| lib/globals.cof |-------------------------------------------------------------
+ 
+pow  = Math.pow
+e    = Math.e
+pi   = Math.PI
+sqrt = Math.sqrt
+show = console.log
+
+inf  = 1e+32
+ninf = -1 * inf
+
+ 
+#--| lib/getline.cof |-------------------------------------------------------------
+ 
+fs = require "fs"
+
+errorWrapper = (action) ->
+  (err, args...) ->
+    if err then throw err
+    action args...
+
+ifFileExists = (filename, action) ->
+   fs.stat filename, errorWrapper (stat) ->
+     if stat.isFile() then action()
+
+getFileAsLines = (filename, action) ->
+   ifFileExists filename, ->
+     fs.readFile filename, "utf8",
+       errorWrapper (content) ->
+         action content.split "\n"
+ 
+#--| csv.cof |-------------------------------------------------------------
+ 
+nump = (string) -> 
+  0 is (string.charAt 0).search \
+       /[ABCDEFGHIJKLMNOPQRSTUVWXYZ]/
+
+asNum = (x,h) -> 
+  y = +x  # coerce string to num
+  h.min = y if y < h.min
+  h.max = y if y > h.max
+  y
+
+numHeader = (word) -> {
+  name : word
+  min  : inf
+  max  : ninf
+  prep : (x,h) -> asNum x,h}
+
+symHeader = (word) -> {
+  name : word
+  prep : (x,h) -> x} # to prep, do nothing
+
+asCells = (string) -> (string.replace /\s/g , '').split ','
+
+readcsv = (lines) -> 
+  head=[]
+  for line,n in lines when line
+    if   n is 0  
+         readheader head, asCells line
+    else readdata   head, asCells line 
+  show head
+
+readheader = (head,cells) -> 
+  for cell,n in cells
+    head[n] = 
+      if nump cell then numHeader cell else symHeader cell
+
+readdata  = (head,cells) -> 
+  for cell,n in cells
+    head[n].prep cell, head[n]
+
+getFileAsLines 'data/weather.csv', readcsv
+ 
+# INSTALL
+# -------
+# 0)  Essential first step: make yourself a cup of coffee.
+# 1)  Install coffee on your local machine.
+#
+# 2)  Download this file and call it, say,  'lib/globals.cof'.
+#     2a) Optional (UNIX systems only)
+#
+#        chmod +x lib/globals.cof  # <=== On UNIX systems
+# 
+# 3)  Look for 'data/' in this file. Usually, its in the
+#     the last few lines. If you see any reference to such 
+#     a data file, then...
+#     3a) Download those data files from
+#         http://now.unbox.org/all/trunk/doc/coffee-mine/data
+#     3b) Edit this file so it points to those data files.
+#
+# 4)  See if this file runs:
+# 
+#         ./lib/globals.cof         # <=== UNIX systems
+#         coffee lib/globals.cof    # <=== for other systems
+# 
+# To check if it is running correctly, see 
+# http://coffee-mine.blogspot.com (look for blogs entries 
+# around csv.cof).
+
+# COPYRIGHT
+# ---------
+# Permission is hereby granted, free of charge, to any person obtaining a
+# copy of this software and associated documentation files (the "Software"),
+# to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense,
+# and/or sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+# ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.

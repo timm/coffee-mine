@@ -1,15 +1,31 @@
 cat<<EOF
 #!/usr/bin/env coffee
+# Copyright (c) 2011,2012 Tim Menzies, MIT License
 
 EOF
 banner $1 | sed 's/^/# /' 
 cat<<EOF
 
-# This file is '$1' from coffee-mine.blogspot.com
-# Copyright (c) 2011,2012 Tim Menzies (tim@menzies.us), MIT License
-# Version: `basename $2`
-# Built:   $3
+# Version......... : `basename $2`
+# Built........... : $3
 
+# License notes... : see below.
+# Install notes... : see below.
+# For more info... : email tim@menzies.us
+# To report bugs.. : https://github.com/timm/coffee-mine/issues
+# For more doco... : read http://coffee-mine.blogspot.com around $3
+EOF
+
+shift 3
+echo " "
+for i in $*;do
+  echo "#--| $i |-------------------------------------------------------------"
+  echo " "
+  cat $i
+  echo " "
+done 
+
+cat<<EOF
 # INSTALL
 # -------
 # 0)  Essential first step: make yourself a cup of coffee.
@@ -56,12 +72,3 @@ cat<<EOF
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 EOF
-
-shift 3
-echo " "
-for i in $*;do
-  echo "#--| $i |-------------------------------------------------------------"
-  echo " "
-  cat $i
-  echo " "
-done 
