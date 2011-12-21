@@ -1,0 +1,49 @@
+# This code courtesy of Martin Wawrusch 
+# from CoffeeScript at GoogleGroups 
+# (see http://goo.gl/kCMQ5).
+
+class normal 
+  constructor:(l) ->
+      @max = -1000000000
+      @min = 1000000000
+      @n   = 0
+      @sum = 0
+      @sumSq = 0
+      @adds(l) if l
+
+  adds:(l) => 
+      @add x for x in l              
+  
+  add:(x) => 
+      @n     = @n + 1
+      @sum   = @sum + x
+      @sumSq = @sumSq + x*x
+      @min   = x if x < @min
+      @max   = x if x > @max
+      @_mean = @_stdev = null
+      x
+  mean:() =>
+      @_mean or= @sum/@n 
+  stdev:() => 
+      @_stdev or= sqrt((@sumSq-((@sum*@sum)/@n))/(@n-1))
+  p:(x) =>
+      s = @stdev()
+      1/sqrt(2*pi*s*s) * \
+         (pow e, -1*((x-@mean())^2/(2*s*s)))
+
+class bins
+  constructor:(l) ->
+      @n   = 0
+      @all = {}
+      @adds(l) if l
+
+  adds:(l) => 
+      @add x for x in l              
+
+  add:(x) => 
+      @n     = @n + 1
+      @all[x]   = (@all[x] ? 0) + 1 
+      x
+
+  p:(x) =>
+      (@all[x] ? 0)/@n

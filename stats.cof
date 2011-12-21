@@ -1,0 +1,8 @@
+
+n = new normal [20,21,22,23,24]
+
+show "stdev: #{n.stdev()} mean: #{n.mean()} p at 22: #{n.p(22)} "
+
+b = new bins 'ape ape cat dog ape'.split /\s+/
+
+show "b " + b.p('ape')

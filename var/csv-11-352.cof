@@ -1,0 +1,122 @@
+#!/usr/bin/env coffee
+
+# This file is 'csv.cof' from coffeemining.blogspot.com
+# Copyright (c) 2011,2012 Tim Menzies (tim@menzies.us), MIT License
+# Version: var/csv-11-352.cof
+# Built:   Sun Dec 18 11:18:01 EST 2011
+
+#          ,-"-.
+#        _r-----i          _
+#        \      |-.      ,###.
+#         |     | |    ,-------.
+#         |     | |   c|       |                       ,--.
+#         |     |'     |       |      _______________ C|  |
+#         (=====)      =========      \_____________/  '=='   cww
+# (HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH)
+
+# INSTALL
+# =======
+# 1) Make yourself a cup of coffee (of course).
+# 2) Install coffee on your local machine.
+# 3) Download this file and call it, say,  'csv' then
+#
+#       chmod +x csv
+#
+# 5) Look at the last few lines at this file. If you see any file
+#    names, download those files from 
+#    http://now.unbox.org/all/trunk/doc/coffeemining
+# 6) See if it runs:
+#
+#        ./csv
+#
+# For more information on (e.g.) if it is running correctly, see
+# http://now.unbox.org/all/trunk/doc/coffeemining.
+
+# COPYRIGHT
+# =========
+# Permission is hereby granted, free of charge, to any person obtaining a
+# copy of this software and associated documentation files (the "Software"),
+# to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense,
+# and/or sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+# ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+############################################################################### 
+
+### lib/getline.cof #############################################################
+
+fs = require "fs"
+
+errorWrapper = (action) ->
+  (err, args...) ->
+    if err then throw err
+    action args...
+
+ifFileExists = (filename, action) ->
+   fs.stat filename, errorWrapper (stat) ->
+     if stat.isFile() then action()
+
+getFileAsLines = (filename, action) ->
+   ifFileExists filename, ->
+     fs.readFile filename, "utf8",
+       errorWrapper (content) ->
+         action content.split "\n"
+
+### lib/misc.cof #############################################################
+
+show = console.log
+inf  = 1e+32
+ninf = -1 * inf
+
+
+### csv.cof #############################################################
+
+nump = (string) -> 
+  0 is (string.charAt 0).search \
+       /[ABCDEFGHIJKLMNOPQRSTUVWXYZ]/
+
+asNum = (x,h) -> 
+  y = parseFloat(x)
+  h.min = y if y < h.min
+  h.max = y if y > h.max
+  y
+
+readcsv = (lines) -> 
+  n = -1
+  head=[]
+  for line in lines when line
+    n = n + 1
+    words = (line.replace /\s/g , '').split ','
+    if n is 0  
+      readheader words,head  
+    else 
+      readdata words,head
+  show head
+
+readheader = (words,head) -> 
+  n = -1
+  for word in words 
+    n = n + 1 
+    if nump word 
+         head[n] = {name: word, prep: ((x,h) -> asNum(x,h)),\
+                    min: inf, max: ninf}
+    else
+         head[n] = {name: word, prep: ((x,h) -> x)}         
+
+readdata  = (words,head) -> 
+  w = -1
+  for word in words 
+    w = w + 1
+    head[w].prep(word,head[w]);
+
+getFileAsLines "data/weather.csv", readcsv

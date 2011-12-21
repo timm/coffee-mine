@@ -1,0 +1,9 @@
+pow  = Math.pow
+e    = Math.e
+pi   = Math.PI
+sqrt = Math.sqrt
+show = console.log
+
+inf  = 1e+32
+ninf = -1 * inf
+

@@ -1,0 +1,34 @@
+pow  = Math.pow
+e    = Math.e
+pi   = Math.PI
+sqrt = Math.sqrt
+show = alert
+
+class normal 
+  max : -1000000000
+  min : 1000000000
+  constructor:(l) ->
+      @n   = 0
+      @sum = 0
+      @sumSq = 0
+      @adds(l) if l
+
+###
+  adds:(l) => 
+      @add x for x in l              
+  add:(x) => 
+      @n     = @n + 1
+      @sum   = @sum + x
+      @sumSq = @sumSq + x*x
+      @min   = x if x < @min
+      @max   = x if x > @max
+      @_mean = @_stdev = null
+      x
+  mean:() =>
+      @_mean ||= @sum/@n 
+  stdev:() => 
+      @_stdev ||= sqrt((@sumSq-((@sum*@sum)/@n))/(@n-1))
+  p:(x) =>
+      s = @stdev()
+      1/sqrt(2*pi*s*s) * (pow e, -1*((x-@mean())^2/(2*s*s)))
+###
