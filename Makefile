@@ -21,6 +21,9 @@ commit :
 	git commit -a -m stuff
 	git push origin master
 
+update :
+	git pull origin master 
+
 ready :
 	mkdir -p $(Dirs)
 
