@@ -8,6 +8,20 @@ ABC
 
 ###
 
+a=1
+
+###
+
+Death to the doggis
+
+I love doggies
+--------------
+
+* 111
+* 222
+
+###
+
 nump = (string) -> 
   0 is (string.charAt 0).search \
        /[ABCDEFGHIJKLMNOPQRSTUVWXYZ]/
