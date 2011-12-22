@@ -9,13 +9,15 @@ Cake=$(MAKE) -B ready $(All)
 
 MAKEFLAGS = -s
 
-run : $(patsubst %,lib/%.cof,$(uses)) $x.cof
+run :  all
+	./$(All)
+
+all : $(patsubst %,lib/%.cof,$(uses)) $x.cof
 	echo ">> $^ $(File)"
 	bash etc/header.sh  "$x" "$(All)" "$(Date)" $^ > $(All)
 	chmod +x $(All)
 	git  add $(All)
 	echo $(All)
-	./$(All)
 
 commit :
 	git commit -a -m stuff
