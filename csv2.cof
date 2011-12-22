@@ -10,7 +10,7 @@ readcsv = (lines) ->
     prep : (x,h) -> x}
  
   nump = (s) -> 
-    0 is s.search /[ABCDEFGHIJKLMNOPQRSTUVWXYZ]/
+    0 is s.search /[A-Z]/
 
   asNum = (x,h) -> 
     y = +x  # coerce string to num

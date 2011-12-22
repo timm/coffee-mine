@@ -28,6 +28,7 @@ ready :
 	mkdir -p $(Dirs)
 
 csv : ; $(MAKE) x=$@ uses="globals getline" 
+csv2: ; $(MAKE) x=$@ uses="globals getline" 
 arffs:; $(MAKE) x=$@ uses="globals getline"  
 arffs2:;$(MAKE) x=$@ uses="globals getline"  
 stats:; $(MAKE) x=$@ uses="globals getline stats" 
