@@ -1,0 +1,18 @@
+class Col 
+  constructor:(s,i) -> 
+    @name   = s
+    @pos    = i
+    @f      = []
+    @goalp  = (s.search /\!/) >= 0
+ 
+  at:(n)    -> @f[n] or= @new()
+  add:(x,n) -> @at(n).add(@prep x)
+  
+class Num extends Col 
+  new: () -> new Normal 
+  prep:(x) -> +x 
+
+class Sym extends Col
+  new: () -> new Bins
+  prep:(x) -> x
+

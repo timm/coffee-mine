@@ -1,0 +1,13 @@
+4 directoires
+
+build
+  all my crap
+
+basic
+  x.coffee
+  x.js
+  x.old/
+
+later
+
+data

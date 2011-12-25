@@ -1,48 +1,51 @@
-class bins
+show = console.log
+
+class Distribution
+  constructor: (l) -> @adds(l)
+  adds:(l) -> @add x for x in l if l
+
+class Bins extends Distribution
   constructor:(l) ->
-      @n   = 0
-      @all = {}
-      @adds(l) if l
+    @n = 0
+    @symbols = 0
+    @symbolTable = {}
+    @all = {}
+    super l
 
-  adds:(l) => 
-      @add x for x in l              
+  add:(x) ->
+    @n = @n + 1
+    now = @all[x] = (@all[x] or= 0) + 1
+    if now is 1
+      @symbols += 1
+      @symbolTable[x] = @symbols
+    x
 
-  add:(x) => 
-      @n     = @n + 1
-      @all[x]   = (@all[x] ? 0) + 1 
-      x
+  p:(x) -> (@all[x] ? 0)/@n
 
-  p:(x) =>
-      (@all[x] ? 0)/@n
-
-class normal 
+class Normal extends Distribution
   constructor:(l) ->
-      @max = -1000000000
-      @min = 1000000000
-      @n   = 0
-      @sum = 0
-      @sumSq = 0
-      @adds(l) if l
-
-  adds:(l) => 
-      @add x for x in l              
+    @max = -1000000000
+    @min = 1000000000
+    @n   = 0
+    @sum = 0
+    @sumSq = 0
+    super l
   
-  add:(x) => 
-      @n     = @n + 1
-      @sum   = @sum + x
-      @sumSq = @sumSq + x*x
-      @min   = x if x < @min
-      @max   = x if x > @max
-      @_mean = @_stdev = null
-      x
+  add:(x) -> 
+    @n     = @n + 1
+    @sum   = @sum + x
+    @sumSq = @sumSq + x*x
+    @min   = x if x < @min
+    @max   = x if x > @max
+    @_mean = @_stdev = null
+    x
 
-  mean:() =>
-      @_mean or= @sum/@n 
-
-  stdev:() => 
-      @_stdev or= sqrt((@sumSq-((@sum*@sum)/@n))/(@n-1))
+  mean:  -> @_mean or= @sum/@n 
+  stdev: -> 
+    @_stdev or= sqrt((@sumSq-((@sum*@sum)/@n))/(@n-1))
 
   p:(x) =>
-      s = @stdev()
-      1/sqrt(2*pi*s*s) * \
-         (pow e, -1*((x-@mean())^2/(2*s*s)))
+    s = @stdev()
+    1/sqrt(2*pi*s*s) * \
+      (pow e, -1*((x-@mean())^2/(2*s*s)))
+

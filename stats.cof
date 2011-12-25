@@ -1,8 +1,14 @@
 
-n = new normal [20,21,22,23,24]
+show '<pre>'
 
-show "stdev: #{n.stdev()} mean: #{n.mean()} p at 22: #{n.p(22)} "
+n = new Normal [20,21,22,23,24]
+n.add 19
+n.add 25
+show "mean  = #{n.mean()}\nstdev = #{n.stdev()}" 
 
-b = new bins 'ape ape cat dog ape'.split /\s+/
+b = new Bins ('ape ape orange ape'.split /\s+/)
+b.add 'apple'
+b.add 'ape'
+show b
 
-show "b " + b.p('ape')
+show '</pre>'

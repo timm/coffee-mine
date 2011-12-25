@@ -1,0 +1,67 @@
+class Learner
+  constructor: (lines) ->
+    @n        = -1    # #attributes    seen so far
+    @k        =  0    # @klass columns seen so far
+    @latest   = null  # the latest col we've made
+    @head     = []    # store data for each column
+    @data     = false # are we in the data section?
+
+  symp: (s)      -> (s.search '{'          ) > 12
+  datap: (s)     -> (s.search /@data/i     ) >= 0 
+  attrp: (s)     -> (s.search /@attribute/i) >= 0 
+  ignorep: (s)   -> (s.search /\?/i        ) >= 0 
+  missingp: (s)  -> s is "?"
+  relationp: (s) -> (s.search /@relation/i ) >= 0 
+
+  theRightDistribution:(cells) -> 
+    klass       = cells[@theKlass]
+    klassHeader = @head[@theKlass]
+    klassHeader.at(klass)
+ 
+  readHeader: (line,cells) -> 
+    if @relationp line then relation = cells[1]
+    if @attrp line 
+      @n += 1
+      c = cells[1]
+      unless @ignorep c
+        @latest = \
+         if @symp line then new Sym c,@n else new Num c,@n
+        @k += 1 if @latest.klassp
+        @head.push @latest
+    if not @data and @datap cells[0]
+      @data = true
+      if @k is 0 
+        show "{" + @latest + "}"
+        @latest.klassp = true 
+    if @latest and @latest.klassp 
+      @theKlass = @n  
+    @data     
+
+  main: (lines) ->
+    for line in lines 
+      line = line.replace /(%.*|\'|\")/g, '' 
+      if line
+        if @data is true
+           cells = (line.replace /\s+/g,'').split /,/
+           @readData cells
+        else
+           cells = line.split /\s+/g
+           @data = @readHeader line, cells
+ 
+class Nb extends Learner
+  constructor: (lines) ->
+    super lines    
+    @theKlass = null
+    @main lines
+ 
+  readData: (cells) ->
+    if cells.length >= @head.length
+      distribution = @theRightDistribution(cells)
+      for h in @head
+        unless @missingp (value = cells[h.pos])
+          distribution.add (h.prep value)
+
+getFileAsLines 'data/weather.arff', 
+               (lines) -> 
+                 nb = new Nb lines
+                 show nb

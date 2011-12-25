@@ -13,10 +13,11 @@ run :  all
 	./$(All)
 
 all : $(patsubst %,lib/%.cof,$(uses)) $x.cof
-	echo ">> $^ $(File)"
 	bash etc/header.sh  "$x" "$(All)" "$(Date)" $^ > $(All)
 	chmod +x $(All)
+	coffee -c $(All)
 	git  add $(All)
+	git add $(All).js
 	echo $(All)
 
 commit :
@@ -29,8 +30,10 @@ update :
 ready :
 	mkdir -p $(Dirs)
 
-csv : ; $(MAKE) x=$@ uses="globals getline" 
-csv2: ; $(MAKE) x=$@ uses="globals getline" 
-arffs:; $(MAKE) x=$@ uses="globals getline"  
-arffs2:;$(MAKE) x=$@ uses="globals getline"  
-stats:; $(MAKE) x=$@ uses="globals getline stats" 
+csv   :; $(MAKE) x=$@ uses="globals getline" 
+csv2  :; $(MAKE) x=$@ uses="globals getline" 
+arffs :; $(MAKE) x=$@ uses="globals getline"  
+arffs2:; $(MAKE) x=$@ uses="globals getline"  
+stats :; $(MAKE) x=$@ uses="globals getline stats" 
+col   :; $(MAKE) x=$@ uses="globals getline stats col" 
+nb    :; $(MAKE) x=$@ uses="globals getline stats col"  
