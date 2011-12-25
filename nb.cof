@@ -5,6 +5,7 @@ class Learner
     @latest   = null  # the latest col we've made
     @head     = []    # store data for each column
     @data     = false # are we in the data section?
+    @theKlass = null
 
   symp: (s)      -> (s.search '{'          ) > 12
   datap: (s)     -> (s.search /@data/i     ) >= 0 
@@ -12,20 +13,16 @@ class Learner
   ignorep: (s)   -> (s.search /\?/i        ) >= 0 
   missingp: (s)  -> s is "?"
   relationp: (s) -> (s.search /@relation/i ) >= 0 
-
-  theRightDistribution:(cells) -> 
-    klass       = cells[@theKlass]
-    klassHeader = @head[@theKlass]
-    klassHeader.at(klass)
  
-  readHeader: (line,cells) -> 
+  readHeader: (row,line,cells) -> 
     if @relationp line then relation = cells[1]
     if @attrp line 
       @n += 1
       c = cells[1]
       unless @ignorep c
         @latest = \
-         if @symp line then new Sym c,@n else new Num c,@n
+          if @symp line \
+            then new Sym c,@n else new Num c,@n
         @k += 1 if @latest.klassp
         @head.push @latest
     if not @data and @datap cells[0]
@@ -34,34 +31,38 @@ class Learner
         show "{" + @latest + "}"
         @latest.klassp = true 
     if @latest and @latest.klassp 
-      @theKlass = @n  
+      @theKlass = @latest  
     @data     
 
   main: (lines) ->
-    for line in lines 
-      line = line.replace /(%.*|\'|\")/g, '' 
-      if line
+    for line,row in lines 
+      if (line = line.replace /(%.*|\'|\")/g, '')
         if @data is true
            cells = (line.replace /\s+/g,'').split /,/
-           @readData cells
+           @readData row,cells
         else
            cells = line.split /\s+/g
-           @data = @readHeader line, cells
+           @data = @readHeader row,line, cells
  
 class Nb extends Learner
   constructor: (lines) ->
-    super lines    
-    @theKlass = null
+    super lines  
     @main lines
  
-  readData: (cells) ->
+  readData: (row,cells) ->
     if cells.length >= @head.length
-      distribution = @theRightDistribution(cells)
+      klassId = @theKlass.pos
+      klass   = cells[klassId]
+      @theKlass.add klass,klassId
+      show @theKlass.f
+      d = @theKlass.f[klass]
+      show "klassId #{klassId} klass #{klass} d #{d}"
       for h in @head
-        unless @missingp (value = cells[h.pos])
-          distribution.add (h.prep value)
+        if not @missingp (value = cells[h.pos])
+          value = h.prep value
+          h.add value,d
 
 getFileAsLines 'data/weather.arff', 
-               (lines) -> 
-                 nb = new Nb lines
-                 show nb
+              (lines) -> 
+               nb = new Nb lines
+               show nb
