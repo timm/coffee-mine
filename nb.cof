@@ -7,7 +7,7 @@ class Learner
     @data     = false # are we in the data section?
     @theKlass = null
 
-  symp: (s)      -> (s.search '{'          ) > 12
+  symp: (s)      -> (s.search '{'          ) > 11
   datap: (s)     -> (s.search /@data/i     ) >= 0
   attrp: (s)     -> (s.search /@attribute/i) >= 0
   klassp: (s)    -> (s.search /\!/i        ) >= 0
