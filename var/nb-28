@@ -1,0 +1,257 @@
+#!/usr/bin/env coffee
+# Copyright (c) 2011,2012 Tim Menzies, MIT License
+# 
+#  #    #  #####
+#  ##   #  #    #
+#  # #  #  #####
+#  #  # #  #    #
+#  #   ##  #    #
+#  #    #  #####
+# 
+# Version ....... : nb-28
+# Built ......... : Mon Dec 26 12:12:48 EST 2011
+# License ....... : see below.
+# Installation .. : see below.
+# Report bugs ... : https://github.com/timm/coffee-mine/issues
+# For doco ...... : read http://coffee-mine.blogspot.com around Mon Dec 26 12:12:48 EST 2011
+
+ 
+#--| lib/globals.cof |-------------------------------------------------------------
+ 
+pow  = Math.pow
+e    = Math.e
+pi   = Math.PI
+sqrt = Math.sqrt
+show = console.log
+
+inf  = 1e+32
+ninf = -1 * inf
+
+ 
+#--| lib/getline.cof |-------------------------------------------------------------
+ 
+fs = require "fs"
+
+errorWrapper = (action) ->
+  (err, args...) ->
+    if err then throw err
+    action args...
+
+ifFileExists = (filename, action) ->
+   fs.stat filename, errorWrapper (stat) ->
+     if stat.isFile() then action()
+
+getFileAsLines = (filename, action) ->
+   ifFileExists filename, ->
+     fs.readFile filename, "utf8",
+       errorWrapper (content) ->
+         action content.split "\n"
+ 
+#--| lib/stats.cof |-------------------------------------------------------------
+ 
+show = console.log
+
+class Distribution
+  constructor: (l) -> @adds(l)
+  adds:(l) -> @add x for x in l if l
+
+class Bins extends Distribution
+  constructor:(l) ->
+    @n = 0
+    @symbols = 0
+    @symbolTable = {}
+    @all = {}
+    super l
+
+  add:(x) ->
+    @n = @n + 1
+    now = @all[x] = (@all[x] or= 0) + 1
+    if now is 1
+      @symbols += 1
+      @symbolTable[x] = @symbols
+    x
+
+  p:(x) -> (@all[x] ? 0)/@n
+
+class Normal extends Distribution
+  constructor:(l) ->
+    @max = -1000000000
+    @min = 1000000000
+    @n   = 0
+    @sum = 0
+    @sumSq = 0
+    super l
+  
+  add:(x) -> 
+    @n     = @n + 1
+    @sum   = @sum + x
+    @sumSq = @sumSq + x*x
+    @min   = x if x < @min
+    @max   = x if x > @max
+    @_mean = @_stdev = null
+    x
+
+  mean:  -> @_mean or= @sum/@n 
+  stdev: -> 
+    @_stdev or= sqrt((@sumSq-((@sum*@sum)/@n))/(@n-1))
+
+  p:(x) =>
+    s = @stdev()
+    1/sqrt(2*pi*s*s) * \
+      (pow e, -1*((x-@mean())^2/(2*s*s)))
+
+ 
+#--| lib/col.cof |-------------------------------------------------------------
+ 
+class Col
+  constructor:(s,i) ->
+    @name   = s
+    @pos    = i
+    @f      = []
+    @goalp  = (s.search /\!/) >= 0
+
+  at:(n)    -> @f[n] = @f[n] or= @new()
+  add:(x,n) -> @at(n).add(x)
+
+class Num extends Col
+  constructor: (s,i) ->
+    @min = inf
+    @max = ninf
+    super s,i
+
+  new: () -> new Normal
+  prep:(x) -> +x
+  add: (x,n) ->
+    @min = x if x < @min
+    @max = x if x > @max
+    super  x,n
+
+class Sym extends Col
+  new: () -> new Bins
+  prep:(x) -> x
+
+ 
+#--| nb.cof |-------------------------------------------------------------
+ 
+class Learner
+  constructor: (lines) ->
+    @n        = -1    # #attributes    seen so far
+    @k        =  0    # @klass columns seen so far
+    @latest   = null  # the latest col we've made
+    @head     = []    # store data for each column
+    @data     = false # are we in the data section?
+    @theKlass = null
+
+  symp: (s)      -> (s.search '{'          ) > 12
+  datap: (s)     -> (s.search /@data/i     ) >= 0
+  attrp: (s)     -> (s.search /@attribute/i) >= 0
+  klassp: (s)    -> (s.search /\!/i        ) >= 0
+  ignorep: (s)   -> (s.search /\?/i        ) >= 0
+  missingp: (s)  -> s is "?"
+  relationp: (s) -> (s.search /@relation/i ) >= 0
+
+  readHeader: (row,line,cells) ->
+    if @relationp line then relation = cells[1]
+    if @attrp line
+      @n += 1
+      c = cells[1]
+      unless @ignorep c
+        @latest = \
+          if @symp line \
+            then new Sym c,@n else new Num c,@n
+        @latest.klassp = @klassp c
+        @k += 1 if @latest.klassp
+        @head.push @latest
+    if not @data and @datap cells[0]
+      @data = true
+      if @k is 0
+        show "{" + @latest + "}"
+        @latest.klassp = true
+    if @latest and @latest.klassp
+      @theKlass = @latest
+    @data
+
+  main: (lines) ->
+    for line,row in lines
+      if (line = line.replace /(%.*|\'|\")/g, '')
+        if @data is true
+           cells = (line.replace /\s+/g,'').split /,/
+           @readData row,cells
+        else
+           cells = line.split /\s+/g
+           @data = @readHeader row,line, cells
+
+class Nb extends Learner
+  constructor: (lines) ->
+    super lines
+    @main lines
+
+  readData: (row,cells) ->
+    if cells.length >= @head.length
+      klass   = cells[@theKlass.pos]
+      for h in @head
+        if not @missingp (value = cells[h.pos])
+          value = h.prep value
+          h.add value,klass
+
+getFileAsLines 'data/weather.arff',
+              (lines) ->
+               nb = new Nb lines
+               for col in nb.head
+                 show "\n  #{col.name} klass? #{col.klassp} min #{col.min} max #{col.max}"
+                 show col.f
+
+ 
+# CREDITS
+# =======
+# 
+# Tim Menzies tim@menzies.us
+# 
+# INSTALL
+# =======
+# 
+# 0)  Essential first step: make yourself a cup of coffee.
+# 1)  Install coffee on your local machine.
+# 
+# 2)  Download this file and call it, say,  'lib/globals.cof'.
+#     2a) Optional (UNIX systems only)
+# 
+#        chmod +x lib/globals.cof  # <=== On UNIX systems
+# 
+# 3)  Look for 'data/' in this file. Usually, its the last few
+#     lines of code (above). If you see any reference to such 
+#     a data file, then...
+#     3a) Download those data files from
+#         http://now.unbox.org/all/trunk/doc/coffee-mine/data
+#     3b) Edit this file so it points to those data files.
+# 
+# 4)  See if this file runs:
+# 
+#         ./lib/globals.cof         # <=== UNIX systems
+#         coffee lib/globals.cof    # <=== for other systems
+# 
+# To check if it is running correctly, see 
+# http://coffee-mine.blogspot.com (look for blogs entries 
+# around lib/stats.cof).
+# 
+# COPYRIGHT
+# ---------
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a
+# copy of this software and associated documentation files (the "Software"),
+# to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense,
+# and/or sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+# ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+# 

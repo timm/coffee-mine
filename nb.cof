@@ -8,34 +8,36 @@ class Learner
     @theKlass = null
 
   symp: (s)      -> (s.search '{'          ) > 12
-  datap: (s)     -> (s.search /@data/i     ) >= 0 
-  attrp: (s)     -> (s.search /@attribute/i) >= 0 
-  ignorep: (s)   -> (s.search /\?/i        ) >= 0 
+  datap: (s)     -> (s.search /@data/i     ) >= 0
+  attrp: (s)     -> (s.search /@attribute/i) >= 0
+  klassp: (s)    -> (s.search /\!/i        ) >= 0
+  ignorep: (s)   -> (s.search /\?/i        ) >= 0
   missingp: (s)  -> s is "?"
-  relationp: (s) -> (s.search /@relation/i ) >= 0 
- 
-  readHeader: (row,line,cells) -> 
+  relationp: (s) -> (s.search /@relation/i ) >= 0
+
+  readHeader: (row,line,cells) ->
     if @relationp line then relation = cells[1]
-    if @attrp line 
+    if @attrp line
       @n += 1
       c = cells[1]
       unless @ignorep c
         @latest = \
           if @symp line \
             then new Sym c,@n else new Num c,@n
+        @latest.klassp = @klassp c
         @k += 1 if @latest.klassp
         @head.push @latest
     if not @data and @datap cells[0]
       @data = true
-      if @k is 0 
+      if @k is 0
         show "{" + @latest + "}"
-        @latest.klassp = true 
-    if @latest and @latest.klassp 
-      @theKlass = @latest  
-    @data     
+        @latest.klassp = true
+    if @latest and @latest.klassp
+      @theKlass = @latest
+    @data
 
   main: (lines) ->
-    for line,row in lines 
+    for line,row in lines
       if (line = line.replace /(%.*|\'|\")/g, '')
         if @data is true
            cells = (line.replace /\s+/g,'').split /,/
@@ -43,26 +45,24 @@ class Learner
         else
            cells = line.split /\s+/g
            @data = @readHeader row,line, cells
- 
+
 class Nb extends Learner
   constructor: (lines) ->
-    super lines  
+    super lines
     @main lines
- 
+
   readData: (row,cells) ->
     if cells.length >= @head.length
-      klassId = @theKlass.pos
-      klass   = cells[klassId]
-      @theKlass.add klass,klassId
-      show @theKlass.f
-      d = @theKlass.f[klass]
-      show "klassId #{klassId} klass #{klass} d #{d}"
+      klass   = cells[@theKlass.pos]
       for h in @head
         if not @missingp (value = cells[h.pos])
           value = h.prep value
-          h.add value,d
+          h.add value,klass
 
-getFileAsLines 'data/weather.arff', 
-              (lines) -> 
+getFileAsLines 'data/weather.arff',
+              (lines) ->
                nb = new Nb lines
-               show nb
+               for col in nb.head
+                 show "\n  #{col.name} klass? #{col.klassp} min #{col.min} max #{col.max}"
+                 show col.f
+

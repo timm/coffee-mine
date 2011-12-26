@@ -1,16 +1,25 @@
-class Col 
-  constructor:(s,i) -> 
+class Col
+  constructor:(s,i) ->
     @name   = s
     @pos    = i
     @f      = []
     @goalp  = (s.search /\!/) >= 0
- 
+
   at:(n)    -> @f[n] = @f[n] or= @new()
-  add:(x,n) -> @at(n).add(@prep x)
-  
-class Num extends Col 
-  new: () -> new Normal 
-  prep:(x) -> +x 
+  add:(x,n) -> @at(n).add(x)
+
+class Num extends Col
+  constructor: (s,i) ->
+    @min = inf
+    @max = ninf
+    super s,i
+
+  new: () -> new Normal
+  prep:(x) -> +x
+  add: (x,n) ->
+    @min = x if x < @min
+    @max = x if x > @max
+    super  x,n
 
 class Sym extends Col
   new: () -> new Bins

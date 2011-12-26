@@ -1,0 +1,37 @@
+(add-to-list 'load-path "~/gits/coffee-mine/etc")
+(require 'coffee-mode)
+
+
+(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("\\.cof$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+
+
+(defun coffee-custom ()
+  "coffee-mode-hook"
+ (set (make-local-variable 'tab-width) 2))
+
+(add-hook 'coffee-mode-hook
+  '(lambda() (coffee-custom)))
+
+(column-number-mode)
+(global-font-lock-mode 1)
+
+(setq inhibit-startup-message t)
+(setq backup-directory-alist nil)
+(setq backup-directory-alist
+      (cons (cons "\\.*$" (expand-file-name "~/opt/tmp/backup"))
+	    backup-directory-alist))
+(global-font-lock-mode t)
+(xterm-mouse-mode t)
+(show-paren-mode t)
+(transient-mark-mode t)
+(global-set-key "\C-cs" 'slime-selector)
+(put 'downcase-region 'disabled nil)
+(setq-default
+ frame-title-format
+ (list '((buffer-file-name " %f" 
+	  (dired-directory 
+	   dired-directory
+	   (revert-buffer-function " %b"
+				   ("%b - Dir:  " default-directory)))))))

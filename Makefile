@@ -12,6 +12,9 @@ MAKEFLAGS = -s
 run :  all
 	./$(All)
 
+edit :
+	emacs -q -l etc/dotemacs `ls -t *.cof | head -1` &
+
 all : $(patsubst %,lib/%.cof,$(uses)) $x.cof
 	bash etc/header.sh  "$x" "$(All)" "$(Date)" $^ > $(All)
 	chmod +x $(All)
