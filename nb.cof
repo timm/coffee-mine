@@ -1,7 +1,7 @@
 class Learner
   constructor: (lines) ->
     @n        = -1    # #attributes    seen so far
-    @k        =  0    # @klass columns seen so far
+    @klasses  =  0    # @klass columns seen so far
     @latest   = null  # the latest col we've made
     @head     = []    # store data for each column
     @data     = false # are we in the data section?
@@ -25,12 +25,11 @@ class Learner
           if @symp line \
             then new Sym c,@n else new Num c,@n
         @latest.klassp = @klassp c
-        @k += 1 if @latest.klassp
+        @klasses += 1 if @latest.klassp
         @head.push @latest
     if not @data and @datap cells[0]
       @data = true
-      if @k is 0
-        show "{" + @latest + "}"
+      if @klasses is 0
         @latest.klassp = true
     if @latest and @latest.klassp
       @theKlass = @latest
@@ -49,20 +48,52 @@ class Learner
 class Nb extends Learner
   constructor: (lines) ->
     super lines
+    @rows = 0
+    @m = 2
+    @k = 1
+    @acc = 0
     @main lines
+    show Math.floor(100 * @acc/@rows)
+
+  about:(cells) ->
+    cells[@theKlass.pos]
+
+  test: (cells) ->
+    what = null
+    best = -1
+    nKlasses = @theKlass.size
+    for klass,counts of @theKlass.f
+      prior = counts.n/(@rows + @k*nKlasses)
+      like  = prior
+      for h in @head
+        unless h.klassp
+          unless @missingp (value = cells[h.pos])
+            like *= h.prob value, klass, @m, prior
+      if like > best
+        best = like
+        what = klass
+    what
+
+  train: (cells,klass) ->
+    for h in @head
+      unless @missingp (value = cells[h.pos])
+        h.add value,klass
 
   readData: (row,cells) ->
     if cells.length >= @head.length
-      klass   = cells[@theKlass.pos]
       for h in @head
-        if not @missingp (value = cells[h.pos])
-          value = h.prep value
-          h.add value,klass
+        cells[h.pos] = h.prep cells[h.pos]
+      @rows += 1
+      if @rows > 1
+         got = @test cells
+         want = cells[@theKlass.pos]
+         #show "#{@rows}: #{cells}, #{want}, #{got}"
+         if got is want
+           @acc += 1
+      @train cells, @about cells
 
-getFileAsLines 'data/weather.arff',
-              (lines) ->
-               nb = new Nb lines
-               for col in nb.head
-                 show "\n  #{col.name} klass? #{col.klassp} min #{col.min} max #{col.max}"
-                 show col.f
+getFileAsLines 'data/diabetes.arff',
+    (lines) ->
+       nb = new Nb lines
+
 

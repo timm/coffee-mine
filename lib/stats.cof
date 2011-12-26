@@ -21,6 +21,7 @@ class Bins extends Distribution
     x
 
   p:(x) -> (@all[x] ? 0)/@n
+  prob:(x,m,prior) -> ((@all[x] ? 0) + m*prior)/(@n + m)
 
 class Normal extends Distribution
   constructor:(l) ->
@@ -30,8 +31,9 @@ class Normal extends Distribution
     @sum = 0
     @sumSq = 0
     super l
-  
-  add:(x) -> 
+
+  prob:(x,m,prior) -> @p x
+  add:(x) ->
     @n     = @n + 1
     @sum   = @sum + x
     @sumSq = @sumSq + x*x
@@ -40,12 +42,10 @@ class Normal extends Distribution
     @_mean = @_stdev = null
     x
 
-  mean:  -> @_mean or= @sum/@n 
-  stdev: -> 
+  mean:  -> @_mean or= @sum/@n
+  stdev: ->
     @_stdev or= sqrt((@sumSq-((@sum*@sum)/@n))/(@n-1))
 
   p:(x) =>
     s = @stdev()
-    1/sqrt(2*pi*s*s) * \
-      (pow e, -1*((x-@mean())^2/(2*s*s)))
-
+    1/sqrt(2*pi*s*s) * (pow e, -1*((x-@mean())^2/(2*s*s)))

@@ -1,5 +1,5 @@
 pow  = Math.pow
-e    = Math.e
+e    = Math.E
 pi   = Math.PI
 sqrt = Math.sqrt
 show = console.log

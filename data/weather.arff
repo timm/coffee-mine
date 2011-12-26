@@ -2,7 +2,7 @@
 
 @attribute outlook {sunny, overcast, rainy}
 @attribute temperature real
-@attribute ?humidity real
+@attribute humidity real
 @attribute windy {TRUE, FALSE}
 @attribute play {yes, no}
 
@@ -21,4 +21,3 @@ rainy   , 75, 80, FALSE, yes
 overcast, 64, 65, TRUE , yes
 sunny   , 75, 70, TRUE , yes
 overcast, 72, 90, TRUE , yes
-

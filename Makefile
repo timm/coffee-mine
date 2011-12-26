@@ -10,16 +10,16 @@ Cake=$(MAKE) -B ready $(All)
 MAKEFLAGS = -s
 
 run :  all
-	./$(All)
+	@time node ./$(All).js
 
 edit :
 	emacs -q -l etc/dotemacs `ls -t *.cof | head -1` &
 
 all : $(patsubst %,lib/%.cof,$(uses)) $x.cof
 	bash etc/header.sh  "$x" "$(All)" "$(Date)" $^ > $(All)
-	chmod +x $(All)
 	coffee -c $(All)
-	git  add $(All)
+	chmod +x $(All) $(All).js
+	git  add $(All) 
 	git add $(All).js
 	echo $(All)
 
@@ -39,4 +39,5 @@ arffs :; $(MAKE) x=$@ uses="globals getline"
 arffs2:; $(MAKE) x=$@ uses="globals getline"  
 stats :; $(MAKE) x=$@ uses="globals getline stats" 
 col   :; $(MAKE) x=$@ uses="globals getline stats col" 
-nb    :; $(MAKE) x=$@ uses="globals getline stats col"  
+nb    :; $(MAKE) x=$@ uses="globals rand getline stats col"  
+shuffle:;$(MAKE) x=$@ uses="globals rand"  
