@@ -18,7 +18,7 @@ class Learner
   readHeader: (row,line,cells) ->
     if @relationp line then relation = cells[1]
     if @attrp line
-      @n += 1
+       @n += 1
       c = cells[1]
       unless @ignorep c
         @latest = \
