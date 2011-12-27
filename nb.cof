@@ -49,8 +49,8 @@ class Nb extends Learner
   constructor: (lines) ->
     super lines
     @rows = 0
-    @m = 2
-    @k = 1
+    @m = 0
+    @k = 0
     @acc = 0
     @main lines
     show Math.floor(100 * @acc/@rows)
@@ -59,19 +59,25 @@ class Nb extends Learner
     cells[@theKlass.pos]
 
   test: (cells) ->
+    show cells
     what = null
     best = -1
     nKlasses = @theKlass.size
     for klass,counts of @theKlass.f
-      prior = counts.n/(@rows + @k*nKlasses)
+      prior = (counts.n+@k)/(@rows + @k*nKlasses)
       like  = prior
+      xx = "prior #{d3 prior} #{nKlasses} " + klass
       for h in @head
         unless h.klassp
           unless @missingp (value = cells[h.pos])
-            like *= h.prob value, klass, @m, prior
+            inc   = h.prob value, klass, @m, prior
+            xx = "#{h.name}.#{value}=#{inc} #{xx}"
+            like *= inc
       if like > best
         best = like
         what = klass
+      #show @head[1].f
+      #show xx + " ==> " + (d4 like) + " " + what
     what
 
   train: (cells,klass) ->
@@ -83,13 +89,12 @@ class Nb extends Learner
     if cells.length >= @head.length
       for h in @head
         cells[h.pos] = h.prep cells[h.pos]
-      @rows += 1
-      if @rows > 1
+      if @rows > 3
          got = @test cells
          want = cells[@theKlass.pos]
-         #show "#{@rows}: #{cells}, #{want}, #{got}"
          if got is want
            @acc += 1
+      @rows += 1
       @train cells, @about cells
 
 getFileAsLines 'data/diabetes.arff',

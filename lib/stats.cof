@@ -48,4 +48,4 @@ class Normal extends Distribution
 
   p:(x) =>
     s = @stdev()
-    1/sqrt(2*pi*s*s) * (pow e, -1*((x-@mean())^2/(2*s*s)))
+    1/(sqrt(2*pi)*s) * (pow e, (-1*(pow x-@mean(),2)/(2*s*s)))
