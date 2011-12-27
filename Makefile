@@ -25,7 +25,7 @@ all : $(patsubst %,lib/%.cof,$(uses)) $x.cof
 
 commit :
 	git commit -a -m stuff
-	git push origin master
+	git push origin  master
 
 update :
 	git pull origin master 
