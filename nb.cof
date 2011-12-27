@@ -35,6 +35,18 @@ class Learner
       @theKlass = @latest
     @data
 
+  readData: (row,cells) ->
+    if cells.length >= @head.length
+      for h in @head
+        cells[h.pos] = h.prep cells[h.pos]
+      if @rows > 3
+         got = @test cells
+         want = cells[@theKlass.pos]
+         if got is want
+           @acc += 1
+      @rows += 1
+      @train cells, @about cells
+
   main: (lines) ->
     for line,row in lines
       if (line = line.replace /(%.*|\'|\")/g, '')
@@ -59,25 +71,20 @@ class Nb extends Learner
     cells[@theKlass.pos]
 
   test: (cells) ->
-    show cells
     what = null
-    best = -1
+    best = ninf
     nKlasses = @theKlass.size
     for klass,counts of @theKlass.f
       prior = (counts.n+@k)/(@rows + @k*nKlasses)
-      like  = prior
-      xx = "prior #{d3 prior} #{nKlasses} " + klass
+      like  = ln(prior)
       for h in @head
         unless h.klassp
           unless @missingp (value = cells[h.pos])
             inc   = h.prob value, klass, @m, prior
-            xx = "#{h.name}.#{value}=#{inc} #{xx}"
-            like *= inc
+            like += ln(inc)
       if like > best
         best = like
         what = klass
-      #show @head[1].f
-      #show xx + " ==> " + (d4 like) + " " + what
     what
 
   train: (cells,klass) ->
@@ -85,17 +92,6 @@ class Nb extends Learner
       unless @missingp (value = cells[h.pos])
         h.add value,klass
 
-  readData: (row,cells) ->
-    if cells.length >= @head.length
-      for h in @head
-        cells[h.pos] = h.prep cells[h.pos]
-      if @rows > 3
-         got = @test cells
-         want = cells[@theKlass.pos]
-         if got is want
-           @acc += 1
-      @rows += 1
-      @train cells, @about cells
 
 getFileAsLines 'data/diabetes.arff',
     (lines) ->

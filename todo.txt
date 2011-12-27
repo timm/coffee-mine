@@ -1,3 +1,9 @@
+all files to .coffee
+repace goalp with klassp
+make "about" survey all discrete klasses... move into learner. make it klasses
+on training, use "klasses"
+log
+
 4 directoires
 
 build
@@ -8,6 +14,6 @@ basic
   x.js
   x.old/
 
-later
+latter
 
 data
