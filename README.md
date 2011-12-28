@@ -18,7 +18,7 @@ The directories are:
 * _[./basics](https://github.com/timm/coffee-mine/tree/master/basics)_
 : the playpen;
 * _[./build](https://github.com/timm/coffee-mine/tree/master/build)_
-: my private build facility. Really, you don't want to look in here-
+: my private build environment. Really, you don't want to look in here-
 just use the built stuff (found in _./basics_ and _./latter_);
 * _[./data](https://github.com/timm/coffee-mine/tree/master/data)_
 : example data used by the code in _./basics_ and _./latter_;

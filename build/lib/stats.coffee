@@ -1,5 +1,3 @@
-show = console.log
-
 class Distribution
   constructor: (l) -> @adds(l)
   adds:(l) -> @add x for x in l if l
