@@ -38,4 +38,4 @@ readdata  = (head,cells) ->
   for cell,n in cells
     head[n].prep cell, head[n]
 
-getFileAsLines 'data/weather.csv', readcsv
+getFileAsLines '../data/weather.csv', readcsv
