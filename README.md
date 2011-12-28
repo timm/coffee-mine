@@ -16,15 +16,15 @@ So I've given up a playpen where I can take baby steps in CoffeeScript.
 
 The directories are:
 
-* _[./build](https://github.com/timm/coffee-mine/tree/master/build)_
+* _[build/](https://github.com/timm/coffee-mine/tree/master/build)_
 : my private build environment. Really, you don't want to look in here-
 just use the built stuff (found in _./easy_ and _./harder_);
-* _[./data](https://github.com/timm/coffee-mine/tree/master/data)_
+* _[data/](https://github.com/timm/coffee-mine/tree/master/data)_
 : example data used by the code in _./easy_ and _./harder_;
-* _[./easy](https://github.com/timm/coffee-mine/tree/master/easy)_
+* _[easy/](https://github.com/timm/coffee-mine/tree/master/easy)_
 : the playpen, for my intro to Coffee experiments and demos
 of the simpler data structures;
-* _[./harder](https://github.com/timm/coffee-mine/tree/master/harder)_
+* _[harder/](https://github.com/timm/coffee-mine/tree/master/harder)_
 : more advanced stuff than _./easy_
 
 Note that each file in _./easy_ and _./harder_ is a  stand-alone
