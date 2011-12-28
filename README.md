@@ -21,7 +21,7 @@ just use the
 built stuff (found in _./basics_ and _./latter_);
 * _[./data](https://github.com/timm/coffee-mine/tree/master/data)_ 
 : example data used by the code in _./basics_ and _./latter_.
-* _[./data](https://github.com/timm/coffee-mine/tree/master/latter)_ 
+* _[./latter](https://github.com/timm/coffee-mine/tree/master/latter)_ 
 : more advanced stuff than _./basics_.
 
 Note that each file in _./basics_ and _./latter_ is
