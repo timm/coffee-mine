@@ -24,11 +24,12 @@ all : $(patsubst %,lib/%.coffee,$(uses)) $x.coffee
 	echo $(All)
 
 commit :
-	git commit -a -m stuff
+	cd .. ; \
+    git commit -a -m stuff; \
 	git push origin  master
 
 update :
-	git pull origin master 
+	cd .. ; git pull origin master 
 
 ready :
 	mkdir -p $(Dirs)
