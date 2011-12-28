@@ -13,7 +13,7 @@ a playpen where I can write tiny prototypes for small chunks of functionality.
 
 The directories are:
 
-* _[./basics](./basics)_ : the playpen; 
+* _[./basics](https://github.com/timm/coffee-mine/tree/master/basics)_ : the playpen; 
 * _./build_ : my private build facility. You should ignore it and just look at the 
 built dstuff (in _./basics_ and _./latter_);
 * _./data_ : example data used by the code in _./basics_ and _./latter_.
