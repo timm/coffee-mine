@@ -21,7 +21,7 @@ The directories are:
 : my private build facility. Really, you don't want to look in here- 
 just use the built stuff (found in _./basics_ and _./latter_);
 * _[./data](https://github.com/timm/coffee-mine/tree/master/data)_ 
-: example data used by the code in _./basics_ and _./latter_.
+: example data used by the code in _./basics_ and _./latter_;
 * _[./latter](https://github.com/timm/coffee-mine/tree/master/latter)_ 
 : more advanced stuff than _./basics_.
 
