@@ -4,6 +4,7 @@ learning.coffee()
 _CoffeeScript.newbie.diary when @task is "build data miners"_
 
 This repo is about a data mining toolkit that implements _Occum's knife_:
+
 * These learners eagerly and aggressively dump irrelevancies, 
 redundacies etcs to learn tiny models. 
 * To read more about that, see http://coffee.unbox.org/p/big-picture.html.
