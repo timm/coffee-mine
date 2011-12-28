@@ -27,7 +27,7 @@ all : $(patsubst %,lib/%.coffee,$(uses)) $x.coffee
 
 commit :
 	cd .. ; \
-    git commit -a -m stuff; \
+    git commit -a ; \
 	git push origin  master
 
 update :
