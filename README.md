@@ -1,7 +1,7 @@
 learning.coffee()
 =================
 
-CoffeeScript.newbie.diary when @task is "build data miners"
+_CoffeeScript.newbie.diary when @task is "build data miners"_
 
 This repo is about a data mining toolkit that implements _Occum's knife_. The
 models learned by this learner eagerly and aggressively dump
@@ -13,7 +13,7 @@ a playpen where I can write tiny prototypes for small chunks of functionality.
 
 The directories are:
 
-* _./basics_ : the playpen; 
+* _[./basics](./basics)_ : the playpen; 
 * _./build_ : my private build facility. You should ignore it and just look at the 
 built dstuff (in _./basics_ and _./latter_);
 * _./data_ : example data used by the code in _./basics_ and _./latter_.
