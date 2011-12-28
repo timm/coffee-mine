@@ -13,9 +13,9 @@ run :  all
 	@time node ./$(All).js
 
 edit :
-	emacs -q -l etc/dotemacs `ls -t *.cof | head -1` &
+	emacs -q -l etc/dotemacs `ls -t *.coffee | head -1` &
 
-all : $(patsubst %,lib/%.cof,$(uses)) $x.cof
+all : $(patsubst %,lib/%.coffee,$(uses)) $x.coffee
 	bash etc/header.sh  "$x" "$(All)" "$(Date)" $^ > $(All)
 	coffee -c $(All)
 	chmod +x $(All) $(All).js
