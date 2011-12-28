@@ -9,8 +9,7 @@ cat<<EOF
 # License ....... : see below.
 # Installation .. : see below.
 # Report bugs ... : https://github.com/timm/coffee-mine/issues
-# For doco ...... : read http://coffee-mine.blogspot.com around $3
-
+# For doco ...... : read http://coffee.unbox.org around $3
 EOF
 
 shift 3
@@ -52,9 +51,8 @@ cat<<EOF
 #         ./$1         # <=== UNIX systems
 #         coffee $1    # <=== for other systems
 # 
-# To check if it is running correctly, see 
-# http://coffee-mine.blogspot.com (look for blogs entries 
-# around $3).
+# To check if it is running correctly, see http://coffee.unbox.com 
+# (look for blogs entries around $3).
 # 
 # COPYRIGHT
 # ---------
