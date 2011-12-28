@@ -4,7 +4,7 @@ learning.coffee()
 A data mining toolkit that implements _Occam's knife_ :
 
 * These learners eagerly and aggressively dump irrelevancies,
-redundacies etcs to learn tiny models.
+redundancies etcs to learn tiny models.
 * To read more about that, see http://coffee.unbox.org/p/big-picture.html.
 
 (Yes, I know the more common term is Occam's Razor but I'm not trimming
@@ -12,7 +12,7 @@ tiny stubble off the main body- I'm hacking away large chunks. So _knife_
 seems more apt that _razor_).
 
 This repo is also my attempt at serious CoffeeScript programming.
-So I've given up a playpen where I can take baby steps in CoffeeScripts. 
+So I've given up a playpen where I can take baby steps in CoffeeScript. 
 
 The directories are:
 
