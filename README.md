@@ -36,7 +36,7 @@ seems more apt that _razor_).
 Why "Knife"?
 ------------
 
-William of Occam was a 14th-century English logician who is quoted saying
+William of Occam was a 14th-century English logician proposed Occam's _Razor_:
 
 > _Entia non sunt multiplicanda praeter necessitatem._
 
