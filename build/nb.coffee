@@ -57,6 +57,9 @@ class Learner
            cells = line.split /\s+/g
            @data = @readHeader row,line, cells
 
+  about:(cells) ->
+    cells[@theKlass.pos]
+
 class Nb extends Learner
   constructor: (lines) ->
     super lines
@@ -66,9 +69,6 @@ class Nb extends Learner
     @acc = 0
     @main lines
     show Math.floor(100 * @acc/@rows)
-
-  about:(cells) ->
-    cells[@theKlass.pos]
 
   test: (cells) ->
     what = null
@@ -91,7 +91,6 @@ class Nb extends Learner
     for h in @head
       unless @missingp (value = cells[h.pos])
         h.add value,klass
-
 
 getFileAsLines '../data/diabetes.arff',
     (lines) ->

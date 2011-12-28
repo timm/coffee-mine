@@ -36,11 +36,11 @@ update :
 ready :
 	mkdir -p $(Dirs)
 
-csv   :; $(MAKE) d="../basics" x=$@ uses="globals getline" 
-csv2  :; $(MAKE) d="../basics" x=$@ uses="globals getline" 
-arffs :; $(MAKE) d="../basics" x=$@ uses="globals getline"  
-arffs2:; $(MAKE) d="../basics" x=$@ uses="globals getline"  
-stats :; $(MAKE) d="../basics" x=$@ uses="globals getline stats" 
-col   :; $(MAKE) d="../basics" x=$@ uses="globals getline stats col" 
-nb    :; $(MAKE) d="../latter" x=$@ uses="globals rand getline stats col"  
-shuffle:;$(MAKE) d="../basics" x=$@ uses="globals rand"  
+csv   :; $(MAKE) d="../easy" x=$@ uses="globals getline" 
+csv2  :; $(MAKE) d="../easy" x=$@ uses="globals getline" 
+arffs :; $(MAKE) d="../easy" x=$@ uses="globals getline"  
+arffs2:; $(MAKE) d="../easy" x=$@ uses="globals getline"  
+stats :; $(MAKE) d="../easy" x=$@ uses="globals getline stats" 
+col   :; $(MAKE) d="../easy" x=$@ uses="globals getline stats col" 
+nb    :; $(MAKE) d="../harder" x=$@ uses="globals rand getline stats col"  
+shuffle:;$(MAKE) d="../easy" x=$@ uses="globals rand"  
