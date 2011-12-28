@@ -13,11 +13,16 @@ a playpen where I can write tiny prototypes for small chunks of functionality.
 
 The directories are:
 
-* _[./basics](https://github.com/timm/coffee-mine/tree/master/basics)_ : the playpen; 
-* _./build_ : my private build facility. You should ignore it and just look at the 
-built dstuff (in _./basics_ and _./latter_);
-* _./data_ : example data used by the code in _./basics_ and _./latter_.
-* _./latter_ : more advanced stuff than _./basics_.
+* _[./basics](https://github.com/timm/coffee-mine/tree/master/basics)_ 
+: the playpen; 
+* _[./build](https://github.com/timm/coffee-mine/tree/master/build)_ 
+: my private build facility. Really, you don't want to look in here-
+just use the 
+built stuff (found in _./basics_ and _./latter_);
+* _[./data](https://github.com/timm/coffee-mine/tree/master/data)_ 
+: example data used by the code in _./basics_ and _./latter_.
+* _[./data](https://github.com/timm/coffee-mine/tree/master/latter)_ 
+: more advanced stuff than _./basics_.
 
 Note that each file in _./basics_ and _./latter_ is
 a  stand-alone CoffeeScript application with all required files joined together. 
