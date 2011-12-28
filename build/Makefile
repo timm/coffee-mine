@@ -34,11 +34,11 @@ update :
 ready :
 	mkdir -p $(Dirs)
 
-csv   :; $(MAKE) x=$@ uses="globals getline" 
-csv2  :; $(MAKE) x=$@ uses="globals getline" 
-arffs :; $(MAKE) x=$@ uses="globals getline"  
-arffs2:; $(MAKE) x=$@ uses="globals getline"  
-stats :; $(MAKE) x=$@ uses="globals getline stats" 
-col   :; $(MAKE) x=$@ uses="globals getline stats col" 
-nb    :; $(MAKE) x=$@ uses="globals rand getline stats col"  
-shuffle:;$(MAKE) x=$@ uses="globals rand"  
+csv   :; $(MAKE) d=basics x=$@ uses="globals getline" 
+csv2  :; $(MAKE) d=basics x=$@ uses="globals getline" 
+arffs :; $(MAKE) d=basics x=$@ uses="globals getline"  
+arffs2:; $(MAKE) d=basics x=$@ uses="globals getline"  
+stats :; $(MAKE) d=basics x=$@ uses="globals getline stats" 
+col   :; $(MAKE) d=basics x=$@ uses="globals getline stats col" 
+nb    :; $(MAKE) d=basics x=$@ uses="globals rand getline stats col"  
+shuffle:;$(MAKE) d=basics x=$@ uses="globals rand"  

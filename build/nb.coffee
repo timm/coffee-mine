@@ -93,7 +93,7 @@ class Nb extends Learner
         h.add value,klass
 
 
-getFileAsLines 'data/diabetes.arff',
+getFileAsLines '../data/diabetes.arff',
     (lines) ->
        nb = new Nb lines
 

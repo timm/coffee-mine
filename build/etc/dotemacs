@@ -1,4 +1,4 @@
-(add-to-list 'load-path "~/gits/coffee-mine/etc")
+(add-to-list 'load-path "etc")
 (require 'coffee-mode)
 
 
