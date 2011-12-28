@@ -15,7 +15,7 @@ small chunks of functionality.
 
 The directories are:
 
-* _[./basics](basics)_
+* _[./basics](https://github.com/timm/coffee-mine/tree/master/basics)_
 : the playpen;
 * _[./build](https://github.com/timm/coffee-mine/tree/master/build)_
 : my private build environment. Really, you don't want to look in here-
