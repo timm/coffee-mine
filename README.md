@@ -3,10 +3,10 @@ learning.coffee()
 
 _CoffeeScript.newbie.diary when @task is "build data miners"_
 
-This repo is about a data mining toolkit that implements _Occum's knife_. The
-models learned by this learner eagerly and aggressively dump
-irrelevancies, redundacies etcs to learn tiny models. To read more about that,
-see http://coffee.unbox.org/p/big-picture.html.
+This repo is about a data mining toolkit that implements _Occum's knife_:
+* These learners eagerly and aggressively dump irrelevancies, 
+redundacies etcs to learn tiny models. 
+* To read more about that, see http://coffee.unbox.org/p/big-picture.html.
 
 This repo is also my attempt at serious CoffeeScript programming. So I've set up
 a playpen where I can write tiny prototypes for small chunks of functionality.
