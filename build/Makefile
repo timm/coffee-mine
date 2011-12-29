@@ -3,7 +3,7 @@ uses=misc getline
 d=../basics
   
 Dirs=var
-Date=$(shell date)
+Date=$(shell   date)
 File=$(shell git log --pretty=format:'' | wc -l)
 Pub=$d/$x
 Var=var/$x-$(File)
