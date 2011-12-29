@@ -35,6 +35,7 @@ update :
 
 ready :
 	mkdir -p $(Dirs)
+	git config --global merge.tool vimdiff
 
 csv   :; $(MAKE) d="../easy" x=$@ uses="globals getline" 
 csv2  :; $(MAKE) d="../easy" x=$@ uses="globals getline" 
