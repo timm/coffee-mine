@@ -23,3 +23,16 @@ shuffle = (l,r = R) ->
     [ l[i],  l[j] ] = [ l[j], l[i] ]
   l
 
+normal = (m,s) ->
+  boxMuller = () ->
+    w=1
+    while w >= 1
+      x1 = 2.0 * R.randf() - 1
+      x2 = 2.0 * R.randf() - 1
+      w  = x1*x1 + x2*x2
+    w = sqrt((-2.0 * ln(w))/w)
+    x1 * w
+  m + boxMuller() * s
+
+any = (l,r=R) ->
+  l[r.rand2(0,l.length)]
