@@ -19,16 +19,16 @@ R = new Rand
 shuffle = (l,r = R) ->
   n = l.length
   for i in [n-1..1]
-    j = R.rand2(0,i)
+    j = r.rand2(0,i)
     [ l[i],  l[j] ] = [ l[j], l[i] ]
   l
 
-normal = (m,s) ->
+normal = (m,s,r = R) ->
   boxMuller = () ->
     w=1
     while w >= 1
-      x1 = 2.0 * R.randf() - 1
-      x2 = 2.0 * R.randf() - 1
+      x1 = 2.0 * r.randf() - 1
+      x2 = 2.0 * r.randf() - 1
       w  = x1*x1 + x2*x2
     w = sqrt((-2.0 * ln(w))/w)
     x1 * w

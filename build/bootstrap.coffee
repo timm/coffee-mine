@@ -32,17 +32,18 @@ class Boot
     for j in [1..@b]
       ystar = (any yhat for i in [1..@m])
       zstar = (any zhat for i in [1..@n])
-      if @tee(ystar,@m,zstar,@n) > @tobs
+      if @tee(ystar,zstar) > @tobs
         bigger += 1
     bigger/@b
 
 bootDemo = ()  ->
+  R = new Rand 2
   b  = 10000
   m1 = 10; s1 = 0.1; m = 100
-  m2 = 20; s2 = 0.1; n = 100
-  y  = (normal m1,s1 for i in [1..m])
-  z  = (normal m2,s2 for i in [1..n])
-  b= new Boot b,m,n,y,z
-  show b.main()
+  m2 = 10; s2 = 0.1; n = 100
+  x  = new Boot b,m,n,
+                (normal m1,s1 for i in [1..m]),
+                (normal m2,s2 for i in [1..n])
+  show x.main()
 
 bootDemo()
