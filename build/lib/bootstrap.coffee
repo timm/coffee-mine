@@ -1,13 +1,10 @@
 class BootStrap
-  constructor:(y,z,b=1000) ->
-    @b = b
-    @m = y.length
-    @n = z.length
-    @y = y
-    @z = z
+  constructor:(@y,@z,@b=1000) ->
+    @m = @y.length
+    @n = @z.length
     @x = []
-    @x.push i for i in y
-    @x.push i for i in z
+    @x.push i for i in @y
+    @x.push i for i in @z
     @xmean = @mean @x
     @zmean = @mean @z
     @ymean = @mean @y
@@ -43,11 +40,12 @@ class BootStrap
     {b: @b, asl: asl, opinion: @opinion asl}
 
   opinion: (asl) ->
-    if asl < 0.01
+    if asl < 0.010
        return "very strong reject"
-    if 0.01 <= asl < 0.025
+    if asl < 0.025
        return "strong reject"
-    if 0.025 <= asl < 0.05
+    if asl < 0.05
        return "reasonably strong reject"
-    if 0.05 <= asl < 0.10
+    if asl < 0.10
       return "borderline reject"
+    "accept"
