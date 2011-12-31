@@ -1,5 +1,7 @@
 class BootStrap
-  constructor:(@y,@z,@b=1000) ->
+  constructor:(y,z,@b=1000) ->
+    @y = y
+    @z = z
     @m = @y.length
     @n = @z.length
     @x = []
@@ -34,7 +36,8 @@ class BootStrap
     for j in [1..@b]
       ystar = (any yhat for i in [1..@m])
       zstar = (any zhat for i in [1..@n])
-      if @testStatistic(ystar,zstar) > tobs
+      tstar = @testStatistic(ystar,zstar)
+      if tstar > tobs
         bigger += 1
     asl = bigger/@b
     {b: @b, asl: asl, opinion: @opinion asl}
