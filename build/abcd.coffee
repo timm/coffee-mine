@@ -1,10 +1,10 @@
-#abcd = new ABCD
-# abcd.add("a","a") for i in [1..6]
-# abcd.add("b","b") for i in [1..2]
-# abcd.add("c","c") for i in [1..5]
-# abcd.add("c","b")
-# abcd.report
-
+abcd = new ABCD
+abcd.add("yes","yes") for i in [1..6]
+abcd.add("no","no") for i in [1..2]
+abcd.add("maybe","maybe") for i in [1..5]
+abcd.add("maybe","no")
+show abcd.report()
+#
 # === Detailed Accuracy By Class ===
 #                TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
 #                  1         0          1         1         1          1        yes
