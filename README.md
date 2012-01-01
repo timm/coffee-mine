@@ -36,12 +36,12 @@ seems more apt that _razor_).
 Why "Knife"?
 ------------
 
-William of Occam was a 14th-century English logician proposed Occam's _Razor_:
+William of Occam was a 14th-century English logician proposed Occam's _Razor_ :
 
 > _Entia non sunt multiplicanda praeter necessitatem._
 
 Or, in English, "entities must not be multiplied beyond necessity".  It is also a core principle of data mining,
-were it got tweaked a little. The best theory, according to data miners, is the one that minimizes _both_ theory size _and_
+where it got tweaked a little. The best theory, according to data miners, is the one that minimizes _both_ theory size _and_
 its number of errors: see [http://en.wikipedia.org/wiki/Minimum_message_length].
 
 But that is all geek land. Here, I just say I prefer _knife_ to _razor_ since the latter just sounds like I'm just trimming
