@@ -7,7 +7,7 @@ A data mining toolkit that implements _Occam's knife_ :
 redundancies etcs to learn tiny models.
 * To read more about that, see http://coffee.unbox.org/p/big-picture.html.
 
-(Yes, I know the more common term is Occam's _Razor_ but I prefer _razor_ to _knife_- see below.)
+(And yes, I know the more common term is Occam's _Razor_ but I prefer _razor_ to _knife_- see below.)
 
 This repo is also my attempt at serious CoffeeScript programming.
 So I've given up a playpen where I can take baby steps in CoffeeScript. 
