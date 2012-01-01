@@ -27,7 +27,7 @@ nummat = (number, decimals, dec=".", sep=",") ->
   s = s.split('.')
   if (s[0].length > 3)
      s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep)
-  if (s[1] || '').length < prec
+  if (s[1]  || '').length < prec
       s[1] = s[1] || ''
       s[1] += new Array(prec - s[1].length + 1).join('0')
    s.join(dec)
