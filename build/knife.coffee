@@ -4,16 +4,16 @@ class Row
     @all   = "_"
     h.add value,@all for h in head
 
-  isa: (goals)  -> @klass or= @isa0(goals)
-  isa0: (gs)    -> (@cell[g.pos] for g in gs).join("-")
+  isa: (gs) -> @klass or= @isa0 gs
+  isa0: (gs)   -> (@cell[pos] for g,pos in gs).join("-")
 
 class ArffReader
-  constructor: (lines,learner) ->
+  constructor: () ->
     @n     = -1    # #attributes    seen so far
     @head  = []    # store data for each column
     @data  = false # are we in the data section?
-    @goals = {}
-    @ins   = {}
+    @goals = []
+    @ins   = []
     @rows  = []
     @last  = null
 
@@ -32,7 +32,7 @@ class ArffReader
         @last = \
           new (if @symp line then Sym else Num) c,@n
         what = if @last.goalp then @goals else @ins
-        what.push latest
+        what.push @last
         @head.push @last
     if not @data and @datap cells[0]
       @data = true
@@ -42,25 +42,21 @@ class ArffReader
   readData: (cells) ->
     if cells.length >= @head.length
       prepped = (h.prep cells[h.pos] for h in @head)
+      show @head
       @rows.push new Row prepped,@head
 
   main: (lines) ->
-    for line,row in lines
+    for line in lines
       if (line = line.replace /(%.*|\'|\")/g, '')
         if @data is true
-          cells = (line.replace /\s+/g,'').split /,/
-          @readData cells
-        else
-          cells = line.split /\s+/g
-          @data = @readHeader line, cells
+          @readData ((line.replace /\s+/g,'').split /,/)
+        #else
+         # @data = @readHeader line, (line.split /\s+/g)
 
-class Knife extends Learner
-  constructor:(lines) ->
-    super lines
-    @row = -1
-    @rows = {}
-    @main lines
 
-getFileAsLines '../data/diabetes.arff',
+getFileAsLines '../data/weather.arff',
     (lines) ->
-       nb = new Knife lines
+       show lines
+       r = new ArffReader
+       r.main lines
+       show r
