@@ -1,19 +1,19 @@
 #!/usr/bin/env coffee
 # Copyright (c) 2011,2012 Tim Menzies, MIT License
 # 
-#  #    #  #####
-#  ##   #  #    #
-#  # #  #  #####
-#  #  # #  #    #
-#  #   ##  #    #
-#  #    #  #####
+#  #    #  #    #     #    ######  ######
+#  #   #   ##   #     #    #       #
+#  ####    # #  #     #    #####   #####
+#  #  #    #  # #     #    #       #
+#  #   #   #   ##     #    #       #
+#  #    #  #    #     #    #       ######
 # 
-# Version ....... : nb-87
-# Built ......... : Sun Jan  1 20:41:21 EST 2012
+# Version ....... : knife-87
+# Built ......... : Sun Jan  1 20:55:24 EST 2012
 # License ....... : see below.
 # Installation .. : see below.
 # Report bugs ... : https://github.com/timm/coffee-mine/issues
-# For doco ...... : read http://coffee.unbox.org around Sun Jan  1 20:41:21 EST 2012
+# For doco ...... : read http://coffee.unbox.org around Sun Jan  1 20:55:24 EST 2012
  
 #--| lib/globals.coffee |-------------------------------------------------------------
  
@@ -296,14 +296,29 @@ class Sym extends Col
 
 
  
-#--| nb.coffee |-------------------------------------------------------------
+#--| knife.coffee |-------------------------------------------------------------
  
+class Row
+  constructor:(@cells) ->
+
+class Knife extends Learner
+  constructor:(lines) ->
+    super lines
+    @main lines
+
+  test: (cells) ->
+    show 1
+
+  train: (cells,klass) ->
+    show cells
+    for h in @head
+      unless @missingp (value = cells[h.pos])
+        h.add value,klass
+
 
 getFileAsLines '../data/diabetes.arff',
     (lines) ->
-       nb = new Nb lines
-
-
+       nb = new Knife lines
  
 # CREDITS
 # =======

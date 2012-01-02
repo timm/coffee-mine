@@ -1,5 +1,5 @@
 (function() {
-  var Bins, Col, Distribution, Learner, Nb, Normal, Num, R, Rand, Sym, any, d2, d3, d4, e, errorWrapper, fs, getFileAsLines, ifFileExists, inf, ln, ninf, normal, nummat, pi, pow, show, shuffle, sqrt;
+  var Bins, Col, Distribution, Knife, Learner, Nb, Normal, Num, R, Rand, Row, Sym, any, d2, d3, d4, e, errorWrapper, fs, getFileAsLines, ifFileExists, inf, ln, ninf, normal, nummat, pi, pow, show, shuffle, sqrt;
   var __slice = Array.prototype.slice, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
     for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
     function ctor() { this.constructor = child; }
@@ -430,8 +430,36 @@
     };
     return Sym;
   })();
+  Row = (function() {
+    function Row(cells) {
+      this.cells = cells;
+    }
+    return Row;
+  })();
+  Knife = (function() {
+    __extends(Knife, Learner);
+    function Knife(lines) {
+      Knife.__super__.constructor.call(this, lines);
+      this.main(lines);
+    }
+    Knife.prototype.test = function(cells) {
+      return show(1);
+    };
+    Knife.prototype.train = function(cells, klass) {
+      var h, value, _i, _len, _ref, _results;
+      show(cells);
+      _ref = this.head;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        h = _ref[_i];
+        _results.push(!this.missingp((value = cells[h.pos])) ? h.add(value, klass) : void 0);
+      }
+      return _results;
+    };
+    return Knife;
+  })();
   getFileAsLines('../data/diabetes.arff', function(lines) {
     var nb;
-    return nb = new Nb(lines);
+    return nb = new Knife(lines);
   });
 }).call(this);
