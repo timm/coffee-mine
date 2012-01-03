@@ -42,7 +42,7 @@ if you supply an argument _-i file_ it will read from that file.
 Files
 =====
 
-The whole code is one file [http://goo.gl/PMUKT](makedown.coffee).
+Download:  [http://goo.gl/PMUKT](makedown.coffee).
 
 Annotated Source Code
 =====================
@@ -116,4 +116,4 @@ COPYRIGHT
 =========
 
 Share and enjoy.
-Makedown by Tim Menzies is licensed under a [http://creativecommons.org/licenses/by-sa/3.0/])Creative Commons Attribution-ShareAlike 3.0 Unported License).
+Makedown by Tim Menzies is licensed under a [http://creativecommons.org/licenses/by-sa/3.0/](Creative Commons Attribution-ShareAlike 3.0 Unported License).
