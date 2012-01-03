@@ -28,10 +28,10 @@ supports syntax highlighting- just wrap the code in four back ticks.
 So, I had an idea for a really cheap way of doing literate programming
 in Github:
 
-1 Divide all source according to the multi-line comment characters.
-2 Wrap every even division in four back ticks.
-3 Save the result as *.md and commit to Github
-4 Voila! Instant doco.
+1. Divide all source according to the multi-line comment characters.
+2. Wrap every even division in four back ticks.
+3. Save the result as *.md and commit to Github
+4. Instant doco!
 
 Options
 =======
