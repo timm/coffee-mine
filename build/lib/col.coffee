@@ -3,34 +3,28 @@ class Col
     @name   = s
     @pos    = i
     @f      = []
-    @size   = 0
     @goalp  = (s.search /\!/) >= 0
+    @missing = 0
+    @all     = @counter()
 
-  at:(n)       -> @f[n] = @f[n] or= @new()
-  add:(x,n)    -> @at(n).add(x)
-  new:         -> @size += 1
+  at:(n)       -> @f[n] = @f[n] or= @counter()
+  add:(x,n)    ->
+    if @missingp x
+      @missing += 1
+    else
+      @all.add(x)
+      @at(n).add(x)
+
   missingp:(s) -> s is "?"
   prob:(x,n,m,prior) -> @at(n).prob(x,m,prior)
 
 class Num extends Col
-  constructor: (s,i) ->
-    @min = inf
-    @max = ninf
-    super s,i
-
-  new: () -> super; new Normal
+  counter: () -> new Normal
   prep:(x) -> if @missingp x then x else +x
-  add: (x,n) ->
-    unless @missing x
-      @min = x if x < @min
-      @max = x if x > @max
-      super  x,n
 
 class Sym extends Col
-  new: () -> super; new Bins
+  counter: () -> new Bins
   prep:(x) -> x
-  add: (x,n) ->
-    super x,n unless @missing x
 
 
 

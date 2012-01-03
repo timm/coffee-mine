@@ -8,11 +8,16 @@ class Bins extends Distribution
     @symbols = 0
     @symbolTable = {}
     @all = {}
+    @most = -1
+    @mode = null
     super l
 
   add:(x) ->
     @n = @n + 1
     now = @all[x] = (@all[x] or= 0) + 1
+    if now > @most
+      @mode = x
+      @most = now
     if now is 1
       @symbols += 1
       @symbolTable[x] = @symbols
@@ -44,6 +49,6 @@ class Normal extends Distribution
   stdev: ->
     @_stdev or= sqrt((@sumSq-((@sum*@sum)/@n))/(@n-1))
 
-  p:(x) =>
+  p:(x) ->
     s = @stdev()
     1/(sqrt(2*pi)*s) * (pow e, (-1*(pow x-@mean(),2)/(2*s*s)))
