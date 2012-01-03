@@ -33,6 +33,15 @@ in Github:
 3. Save the result as *.md and commit to Github
 4. Instant doco!
 
+Example Output
+--------------
+
+This file was generated using Makedown as follows:
+
+    coffee makedown.coffee -- -i makedown.coffee > makedown.md
+
+To see the raw source code, go [here](https://raw.github.com/timm/coffee-mine/master/build/makedown.coffee).
+
 Options
 =======
 
