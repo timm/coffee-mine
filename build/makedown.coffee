@@ -97,6 +97,15 @@ BUGS
 ====
 The file needs at least one multi-line comment.
 
+SEE ALSO
+========
+
+For a more standard approach to Markdown (with syntax highlighting) that does not require Github,
+see
+
++ http://davidchambers.bitbucket.org/showdown/
++ or, if you dont want syntax highlighting, [showdown.coffee](https://bitbucket.org/davidchambers/showdown/src/f23b97925ca8/src/showdown.coffee)
+
 AUTHOR
 ======
 
