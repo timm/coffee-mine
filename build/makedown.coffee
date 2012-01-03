@@ -95,7 +95,7 @@ gets wrapped in the back ticks.
 ###
 comment = true
 for part,n in parts
-  if n > 0
+  if n > 0 # ignore bogus first entry
     comment = not comment
     if comment
       show "#{tick3}coffeescript#{part}#{tick3}"
