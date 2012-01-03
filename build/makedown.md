@@ -42,7 +42,7 @@ if you supply an argument _-i file_ it will read from that file.
 Files
 =====
 
-The whole code is one file _makedown.coffee_.
+The whole code is one file [http://goo.gl/PMUKT](makedown.coffee).
 
 Annotated Source Code
 =====================
