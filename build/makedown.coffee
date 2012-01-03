@@ -100,10 +100,10 @@ The file needs at least one multi-line comment.
 AUTHOR
 ======
 
-Tim Menzies tim@menzies.us
+[https://github.com/timm](Tim Menzies)
 
 COPYRIGHT
 =========
 
 Share and enjoy.
-Makedown by Tim Menzies is licensed under a [http://creativecommons.org/licenses/by-sa/3.0/](Creative Commons Attribution-ShareAlike 3.0 Unported License).
+Makedown by [https://github.com/timm](Tim Menzies) is licensed under a [http://creativecommons.org/licenses/by-sa/3.0/](Creative Commons Attribution-ShareAlike 3.0 Unported License).
