@@ -44,6 +44,7 @@ found in _O(log N)_ time.
 The RBST stores at each node a small integer, the number of
 its descendants (counting itself as one). When a key _x_ is to be inserted
 into a tree that already has _n_ nodes:
+
 + The insertion algorithm chooses
 with probability _1/(n + 1)_ to place _x_ as the new root of the tree.
 + Otherwise, it calls the insertion procedure recursively to insert _x_
@@ -62,11 +63,6 @@ Files
 + And the standard global definitions of [globals.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/globals.coffee).
 + All code in
 [one file](https://github.com/timm/coffee-mine/blob/master/build/var/rbst-103).
-
-Bugs
-====
-
-None known (yet) but if you find any, please [report them](https://github.com/timm/coffee-mine/issues?sort=comments&direction=desc&state=open).
 
 Annotated Source Code
 =====================
@@ -211,6 +207,10 @@ class Pair
 
 ```
 
+Bugs
+====
+
+None known (yet) but if you find any, please [report them here](https://github.com/timm/coffee-mine/issues?sort=comments&direction=desc&state=open).
 
 AUTHOR
 ======
