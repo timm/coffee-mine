@@ -19,6 +19,9 @@ generated key value pairs to a RandomBinaryTree:
         b = new RandomBinaryTree thing.x, thing.y
       else
         b.add thing
+     b.show()
+
+The last line does a pretty print of the generated tree.
 
 Description
 ===========
@@ -51,7 +54,7 @@ with probability _1/(n + 1)_ to place _x_ as the new root of the tree.
 within the `left` or `right` subtree (depending on whether its key is less
 than or greater than the root).
 
-The numbers of descendants are used by the algorithm to calculate the
+The numbers of descendants `n` are used by the algorithm to calculate the
 necessary probabilities for the random choices at each step.
 
 Files
