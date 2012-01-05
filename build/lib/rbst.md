@@ -32,6 +32,7 @@ RBSTs are very simple to code and incrementally maintain their balance.
 That is, when using them, you never need to pause to rebalance the tree.
 
 RBSTs are based on binary search trees (BST):
+
 + A BST  contains nodes with a `key,value` and
 `left` and `right` pointers to sub-trees. In such trees, all the
 `left` keys are less than or equal to the local `key` and all the
@@ -55,21 +56,41 @@ necessary probabilities for the random choices at each step.
 Files
 =====
 
++ This file : [rbst.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/rbst.coffee).
++ Uses the random number generator  : [rand.coffee])https://raw.github.com/timm/coffee-mine/master/build/lib/rbst.coffee).
++ And the standard global definitions of [globals.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/globals.coffee).
 
+Bugs
+====
+
+None known (yet) but if you find any, please [report them](https://github.com/timm/coffee-mine/issues?sort=comments&direction=desc&state=open).
+
+Annotated Source Code
+=====================
+
+Creation
+--------
+
+A new tree contains one node and has nil for the `left` and `right` pointers.
 
 ```coffeescript
-
-x = (x,y) -> new Pair x,y
-
-class Pair
-  constructor: (@x,@y) ->
-
 class RandomBinaryTree
   constructor: (@key,@value) ->
     @n = 1
     @left = @right = null
 
+```
 
+Tree Manipulation
+------------------
+
+Rotating left and right is way to move a sub-node up a tree,
+while preserving the BST invariant that the left/right keys
+in the new sub-trees are in the right order.
+
+![left, right rotate](http://upload.wikimedia.org/wikipedia/commons/2/23/Tree_rotation.png)
+
+```coffeescript
   rotateR: (h) ->
     x = h.right
     h.right = x.left
@@ -82,7 +103,15 @@ class RandomBinaryTree
     x.right = h
     x
 
+```
 
+`RotateR` and `rotateL` is used
+by the `rootInsert` function. This
+function pushes a new node up a tree to the root
+of that tree.
+
+
+```coffeescript
   rootInsert: (h,key,val,lt) ->
     unless h
       return new RandomBinaryTree key,val
@@ -94,6 +123,22 @@ class RandomBinaryTree
       h       = @rotateL h
     h
 
+```
+
+Inserting an Item
+-----------------
+
+`insert` adds a new node to a sub-tree.
+For a sub-tree of size `n`, at probability
+  _1/(n+1)_, the new node is inserted to the root.
+Otherwise, it is inserted somewhere into the leaves.
+
+Note that `rootInsert` and `insert`
+support `lt`- a customisable
+comparison operator for two keys.
+
+
+```coffeescript
   insert: (h,key,val,lt) ->
     unless h
       return new RandomBinaryTree key,val
@@ -106,20 +151,47 @@ class RandomBinaryTree
     @n += 1
     h
 
+```
+
+`Adds` and `add` are convenience functions
+for adding pairs of key values.
+
+`Adds` inserts multiple pairs.
+
+```coffeescript
   adds: (many, lt = ((x,y) -> x < y)) ->
     out = @
     for one in many
       out = @insert out, one.x,one.y, lt
     out
 
+```
+
+`Add` inserts one pair
+
+```coffeescript
   add: (one, lt = ((x,y) -> x < y)) ->
      @insert @ , one.x,one.y, lt
 
+```
+
+Printing the tree
+-----------------
+
+Simple recursive function to print
+nodes, with an indentation equal
+to the depth of the node in the tree
+
+```coffeescript
   show: (indent="",prefix="=",add="|   ") ->
     s = "#{indent}#{prefix}#{@key}*#{@n} :  #{@value}"
     show s
     @left.show  indent+add,"<= ",add if @left
     @right.show indent+add,">  ",add if @right
 
+x = (x,y) -> new Pair x,y
+
+class Pair
+  constructor: (@x,@y) ->
 
 ```

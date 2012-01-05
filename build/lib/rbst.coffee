@@ -105,6 +105,7 @@ in the new sub-trees are in the right order.
 by the `rootInsert` function. This
 function pushes a new node up a tree to the root
 of that tree.
+
 ###
   rootInsert: (h,key,val,lt) ->
     unless h
@@ -129,6 +130,7 @@ Otherwise, it is inserted somewhere into the leaves.
 Note that `rootInsert` and `insert`
 support `lt`- a customisable
 comparison operator for two keys.
+
 ###
   insert: (h,key,val,lt) ->
     unless h
