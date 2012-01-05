@@ -48,7 +48,6 @@ into a tree that already has _n_ nodes:
 
 + The insertion algorithm chooses
 with probability _1/(n + 1)_ to place _x_ as the new root of the tree.
-
 + Otherwise, it calls the insertion procedure recursively to insert _x_
 within the `left` or `right` subtree (depending on whether its key is less
 than or greater than the root).
