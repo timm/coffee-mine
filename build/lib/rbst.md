@@ -90,6 +90,7 @@ in the new sub-trees are in the right order.
 
 ![left, right rotate](http://upload.wikimedia.org/wikipedia/commons/2/23/Tree_rotation.png)
 
+
 ```coffeescript
   rotateR: (h) ->
     x = h.right
@@ -159,6 +160,7 @@ for adding pairs of key values.
 `Adds` inserts multiple pairs.
 
 ```coffeescript
+#
   adds: (many, lt = ((x,y) -> x < y)) ->
     out = @
     for one in many
@@ -170,6 +172,7 @@ for adding pairs of key values.
 `Add` inserts one pair
 
 ```coffeescript
+
   add: (one, lt = ((x,y) -> x < y)) ->
      @insert @ , one.x,one.y, lt
 
