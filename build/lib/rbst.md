@@ -61,7 +61,7 @@ Files
 [rand.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/rbst.coffee).
 + And the standard global definitions of [globals.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/globals.coffee).
 + All code in
-[one file](https://raw.github.com/timm/coffee-mine/master/build/var/rbst-110).
+[one file](https://github.com/timm/coffee-mine/blob/master/build/var/rbst-103).
 
 Bugs
 ====
@@ -175,7 +175,7 @@ for adding pairs of key values.
 
 ```coffeescript
   add: (one, lt = ((x,y) -> x < y)) ->
-     @insert @ , one.x,one.y, lt
+    @insert @ , one.x,one.y, lt
 
 ```
 
@@ -210,6 +210,7 @@ class Pair
   constructor: (@x,@y) ->
 
 ```
+
 
 AUTHOR
 ======

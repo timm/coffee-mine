@@ -8,12 +8,12 @@
 #  #   #   #    #  #    #     #
 #  #    #  #####    ####      #
 # 
-# Version ....... : rbst-110
-# Built ......... : Thu Jan  5 01:16:15 EST 2012
+# Version ....... : rbst-111
+# Built ......... : Thu Jan  5 01:21:42 EST 2012
 # License ....... : see below.
 # Installation .. : see below.
 # Report bugs ... : https://github.com/timm/coffee-mine/issues
-# For doco ...... : read http://coffee.unbox.org around Thu Jan  5 01:16:15 EST 2012
+# For doco ...... : read http://coffee.unbox.org around Thu Jan  5 01:21:42 EST 2012
  
 #--| lib/globals.coffee |-------------------------------------------------------------
  
@@ -153,8 +153,11 @@ Files
 =====
 
 + This file : [rbst.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/rbst.coffee).
-+ Uses the random number generator  : [rand.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/rbst.coffee).
++ Uses the random number generator  :
+[rand.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/rbst.coffee).
 + And the standard global definitions of [globals.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/globals.coffee).
++ All code in
+[one file](https://github.com/timm/coffee-mine/blob/master/build/var/rbst-103).
 
 Bugs
 ====
@@ -257,7 +260,7 @@ for adding pairs of key values.
 `Add` inserts one pair
 ###
   add: (one, lt = ((x,y) -> x < y)) ->
-     @insert @ , one.x,one.y, lt
+    @insert @ , one.x,one.y, lt
 
 ###
 Printing the tree
