@@ -8,12 +8,12 @@
 #  #   #   #    #  #    #     #
 #  #    #  #####    ####      #
 # 
-# Version ....... : rbst-108
-# Built ......... : Thu Jan  5 01:10:20 EST 2012
+# Version ....... : rbst-110
+# Built ......... : Thu Jan  5 01:16:15 EST 2012
 # License ....... : see below.
 # Installation .. : see below.
 # Report bugs ... : https://github.com/timm/coffee-mine/issues
-# For doco ...... : read http://coffee.unbox.org around Thu Jan  5 01:10:20 EST 2012
+# For doco ...... : read http://coffee.unbox.org around Thu Jan  5 01:16:15 EST 2012
  
 #--| lib/globals.coffee |-------------------------------------------------------------
  
@@ -153,7 +153,7 @@ Files
 =====
 
 + This file : [rbst.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/rbst.coffee).
-+ Uses the random number generator  : [rand.coffee])https://raw.github.com/timm/coffee-mine/master/build/lib/rbst.coffee).
++ Uses the random number generator  : [rand.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/rbst.coffee).
 + And the standard global definitions of [globals.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/globals.coffee).
 
 Bugs
@@ -183,6 +183,7 @@ while preserving the BST invariant that the left/right keys
 in the new sub-trees are in the right order.
 
 ![left, right rotate](http://upload.wikimedia.org/wikipedia/commons/2/23/Tree_rotation.png)
+
 ###
   rotateR: (h) ->
     x = h.right
@@ -265,6 +266,7 @@ Printing the tree
 Simple recursive function to print
 nodes, with an indentation equal
 to the depth of the node in the tree
+
 ###
   show: (indent="",prefix="=",add="|   ") ->
     s = "#{indent}#{prefix}#{@key}*#{@n} :  #{@value}"
@@ -272,12 +274,31 @@ to the depth of the node in the tree
     @left.show  indent+add,"<= ",add if @left
     @right.show indent+add,">  ",add if @right
 
+###
+
+Helper Functions
+----------------
+
+`x` is a convenient way to generate a value pair.
+
+###
 x = (x,y) -> new Pair x,y
 
 class Pair
   constructor: (@x,@y) ->
 
- 
+###
+AUTHOR
+======
+
+[Tim Menzies](https://github.com/timm)
+
+COPYRIGHT
+=========
+
+Share and enjoy.
+Makedown by [Tim Menzies](https://github.com/timm) is licensed under a
+[Creative Commons Attribution-ShareAlike 3.0 Unported License](http://creativecommons.org/licenses/by-sa/3.0/) 
 #--| rbst.coffee |-------------------------------------------------------------
  
 one = -> x R.rand2(1,10000), R.rand2(1,10)

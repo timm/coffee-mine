@@ -57,8 +57,11 @@ Files
 =====
 
 + This file : [rbst.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/rbst.coffee).
-+ Uses the random number generator  : [rand.coffee])https://raw.github.com/timm/coffee-mine/master/build/lib/rbst.coffee).
++ Uses the random number generator  :
+[rand.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/rbst.coffee).
 + And the standard global definitions of [globals.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/globals.coffee).
++ All code in
+[one file](https://raw.github.com/timm/coffee-mine/master/build/var/rbst-110).
 
 Bugs
 ====
@@ -151,7 +154,6 @@ for adding pairs of key values.
 
 `Adds` inserts multiple pairs.
 ###
-#
   adds: (many, lt = ((x,y) -> x < y)) ->
     out = @
     for one in many
@@ -161,7 +163,6 @@ for adding pairs of key values.
 ###
 `Add` inserts one pair
 ###
-
   add: (one, lt = ((x,y) -> x < y)) ->
      @insert @ , one.x,one.y, lt
 
@@ -172,6 +173,7 @@ Printing the tree
 Simple recursive function to print
 nodes, with an indentation equal
 to the depth of the node in the tree
+
 ###
   show: (indent="",prefix="=",add="|   ") ->
     s = "#{indent}#{prefix}#{@key}*#{@n} :  #{@value}"
@@ -179,8 +181,28 @@ to the depth of the node in the tree
     @left.show  indent+add,"<= ",add if @left
     @right.show indent+add,">  ",add if @right
 
+###
+
+Helper Functions
+----------------
+
+`x` is a convenient way to generate a value pair.
+
+###
 x = (x,y) -> new Pair x,y
 
 class Pair
   constructor: (@x,@y) ->
 
+###
+AUTHOR
+======
+
+[Tim Menzies](https://github.com/timm)
+
+COPYRIGHT
+=========
+
+Share and enjoy.
+Makedown by [Tim Menzies](https://github.com/timm) is licensed under a
+[Creative Commons Attribution-ShareAlike 3.0 Unported License](http://creativecommons.org/licenses/by-sa/3.0/)
