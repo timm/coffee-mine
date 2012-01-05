@@ -59,7 +59,7 @@ Files
 
 + This file : [rbst.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/rbst.coffee).
 + Uses the random number generator  :
-[rand.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/rbst.coffee).
+[rand.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/rand.coffee).
 + And the standard global definitions of [globals.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/globals.coffee).
 + All code in
 [one file](https://github.com/timm/coffee-mine/blob/master/build/var/rbst-103).
