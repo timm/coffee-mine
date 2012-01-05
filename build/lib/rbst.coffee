@@ -37,7 +37,6 @@ RBSTs are based on binary search trees (BST):
 `left` and `right` pointers to sub-trees. In such trees, all the
 `left` keys are less than or equal to the local `key` and all the
 `right` jeys are greater than the local `key`.
-
 + Ideally, a BST is _balanced_; i.e. it has the same number of nodes
 in the `left` and `right` sub-trees. In such a tree, _N_ items can be
 found in _O(log N)_ time.
