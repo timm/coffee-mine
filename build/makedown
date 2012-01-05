@@ -1,0 +1,5 @@
+if [ -f "$1.coffee" ]
+then 
+	coffee makedown.coffee -- -i $1.coffee > $1.md
+	git add $1.md
+fi
