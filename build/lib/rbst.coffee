@@ -32,7 +32,6 @@ RBSTs are very simple to code and incrementally maintain their balance.
 That is, when using them, you never need to pause to rebalance the tree.
 
 RBSTs are based on binary search trees (BST):
-
 + A BST  contains nodes with a `key,value` and
 `left` and `right` pointers to sub-trees. In such trees, all the
 `left` keys are less than or equal to the local `key` and all the
@@ -44,7 +43,6 @@ found in _O(log N)_ time.
 The RBST stores at each node a small integer, the number of
 its descendants (counting itself as one). When a key _x_ is to be inserted
 into a tree that already has _n_ nodes:
-
 + The insertion algorithm chooses
 with probability _1/(n + 1)_ to place _x_ as the new root of the tree.
 + Otherwise, it calls the insertion procedure recursively to insert _x_
