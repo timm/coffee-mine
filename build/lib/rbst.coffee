@@ -114,13 +114,13 @@ class RandomBinaryTree
   insert: (h,key,val,lt) ->
     unless h
       return new RandomBinaryTree key,val
-    if R.rand() < 1/(h.n + 1)
+    if R.randf() < (1/(h.n + 1))
       return @rootInsert h,     key,val,lt
     if lt key,h.key
       h.left   = @insert h.left,key,val,lt
     else
       h.right  = @insert h.right,key,val,lt
-    @n += 1
+    h.n = h.n + 1
     h
   rootInsert: (h,key,val,lt) ->
     unless h
@@ -137,12 +137,15 @@ class RandomBinaryTree
 #
 # `Adds` inserts multiple pairs.
   adds: (many, lt = ((x,y) -> x < y)) ->
+    out = @
     for one in many
-      @insert out, one.x,one.y, lt
-    @
+      out = @insert out, one.x,one.y, lt
+    out
+
 # `Add` inserts one pair
   add: (one, lt = ((x,y) -> x < y)) ->
     @insert @ , one.x,one.y, lt
+
 # Printing the tree
 # -----------------
 #
