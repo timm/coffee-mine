@@ -86,20 +86,30 @@ class RandomBinaryTree
   constructor: (@key,@value) ->
     @n = 1
     @left = @right = null
+
 # `RotateR` and `rotateL` is used
 # by the `rootInsert` function. This
 # function pushes a new node up a tree to the root
 # of that tree.
-  rotateR: (h) ->
+  rotateL: (h) ->
     x = h.right
+    h.n = x.n = null
     h.right = x.left
     x.left = h
+    h.size(); x.size()
     x
-  rotateL: (h) ->
-    x = h.left
+  rotateR: (h) ->
+    x   = h.left
     h.left = x.right
     x.right = h
+    h.size(); x.size()
     x
+  size:() ->
+    @n  = 1
+    @n += @left.size()  if @left
+    @n += @right.size() if @right
+    @n
+
 # Inserting an Item
 # -----------------
 #
@@ -112,18 +122,19 @@ class RandomBinaryTree
 # support `lt`- a customisable
 # comparison operator for two keys.
   insert: (h,key,val,lt) ->
-    unless h
+    if h is null
       return new RandomBinaryTree key,val
-    if R.randf() < (1/(h.n + 1))
+    if R.randf() < (1/(h.n))
       return @rootInsert h,     key,val,lt
     if lt key,h.key
       h.left   = @insert h.left,key,val,lt
     else
       h.right  = @insert h.right,key,val,lt
-    h.n = h.n + 1
+    h.n +=  1
     h
+
   rootInsert: (h,key,val,lt) ->
-    unless h
+    if h is null
       return new RandomBinaryTree key,val
     if lt key,h.key
       h.left = @rootInsert h.left,  key,val,lt
