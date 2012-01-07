@@ -14,7 +14,7 @@ run :  all
 	@time -p node ./$(Pub).js
 
 edit :
-	emacs -q -l etc/dotemacs `ls -t *.coffee | head -1` &
+	emacs  -q -l etc/dotemacs `ls -t *.coffee | head -1` &
 
 all : $(patsubst %,lib/%.coffee,$(uses)) $x.coffee
 	bash etc/header.sh  "$x" "$(Var)" "$(Date)" $^ > $(Var)
