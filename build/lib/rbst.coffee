@@ -96,18 +96,23 @@ class RandomBinaryTree
     h.n = x.n = null
     h.right = x.left
     x.left = h
-    h.size(); x.size()
+    h.reset(); x.reset();
+    h.size() ; x.size()
     x
   rotateR: (h) ->
     x   = h.left
     h.left = x.right
     x.right = h
-    h.size(); x.size()
+    h.reset(); x.reset();
+    h.size() ; x.size()
     x
+  reset:() ->
+    @n = null
   size:() ->
-    @n  = 1
-    @n += @left.size()  if @left
-    @n += @right.size() if @right
+    unless @n
+      @n  = 1
+      @n += @left.size()  if @left
+      @n += @right.size() if @right
     @n
 
 # Inserting an Item
