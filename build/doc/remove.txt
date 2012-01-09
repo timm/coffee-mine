@@ -1,0 +1,23 @@
+Node partR(Node h, int k) 
+  { int t = (h.l == null) ? 0 : h.l.N; 
+    if (t > k) 
+      { partR(h.l, k); h = rotR(h); } 
+    if (t < k) 
+      { partR(h.r, k-t-1); h = rotL(h); } 
+    return h; 
+  } 
+private Node joinLR(Node a, Node b) 
+  { if (b == null) return a; 
+    b = partR(b, 0); b.l = a; 
+    return b; 
+  } 
+private Node removeR(Node h, KEY v) 
+  { if (h == null) return null; 
+    KEY w = h.item.key(); 
+    if (less(v, w)) removeR(h.l, v); 
+    if (less(w, v)) removeR(h.r, v); 
+    if (equals(v, w)) h = joinLR(h.l, h.r); 
+    return h; 
+  } 
+void remove(KEY v) 
+  { removeR(head, v); } 
