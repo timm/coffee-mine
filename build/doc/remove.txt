@@ -28,3 +28,6 @@ private Node joinLR(Node a, Node b)
          { a.r = joinLR(a.r, b); return a; } 
     else { b.l = joinLR(a, b.l); return b; } 
   } 
+
+
+Tree-PLRU, is an efficient algorithm to find an item that most likely has not been accessed very recently, given a set of items and a sequence of access events to the items. This technique is used in the CPU cache of the Intel 486 and in many processors in the Power Architecture (formerly PowerPC) family, such as Freescale's PowerPC G4 used by Apple Computer. The algorithm works as follows: consider a binary search tree for the items in question. Each node of the tree has a one-bit flag denoting "go left to find a pseudo-LRU element" or "go right to find a pseudo-LRU element". To find a pseudo-LRU element, traverse the tree according to the values of the flags. To update the tree with an access to an item N, traverse the tree to find N and, during the traversal, set the node flags to denote the direction that is opposite to the direction taken.
