@@ -6,11 +6,7 @@ Node partR(Node h, int k)
       { partR(h.r, k-t-1); h = rotL(h); } 
     return h; 
   } 
-private Node joinLR(Node a, Node b) 
-  { if (b == null) return a; 
-    b = partR(b, 0); b.l = a; 
-    return b; 
-  } 
+
 private Node removeR(Node h, KEY v) 
   { if (h == null) return null; 
     KEY w = h.item.key(); 
@@ -19,5 +15,16 @@ private Node removeR(Node h, KEY v)
     if (equals(v, w)) h = joinLR(h.l, h.r); 
     return h; 
   } 
+
 void remove(KEY v) 
-  { removeR(head, v); } 
+  { removeR(head, v); 
+  } 
+
+private Node joinLR(Node a, Node b) 
+  { int N = a.N + b.N; 
+    if (a == null) return b; 
+    if (b == null) return a; 
+    if (Math.random()*N < 1.0*a.N) 
+         { a.r = joinLR(a.r, b); return a; } 
+    else { b.l = joinLR(a, b.l); return b; } 
+  } 
