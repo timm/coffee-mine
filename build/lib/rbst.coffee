@@ -1,90 +1,93 @@
-# NAME
-# ====
-#
-# Rbst
-#
-# Synopsis
-# ========
-#
-# Add 1,000 randomly
-# generated key value pairs to a RandomBinaryTree:
-#
-#     one = -> x R.rand2(1,10000), R.rand2(1,10)
-#     b = null
-#     for n in [1..1000]
-#       thing = one()
-#       if not b
-#         b = new RandomBinaryTree thing.x, thing.y
-#       else
-#         b.add thing
-#      b.show()
-#
-# The last line does a pretty print of the generated tree.
-#
-# Description
-# ===========
-#
-# A [random binary search
-# tree](http://en.wikipedia.org/wiki/Randomized_binary_search_tree)
-# (RBST) is a way to build an (approximately) balanced binary search
-# tree.
-#
-# RBSTs are very simple to code and incrementally maintain their balance.
-# That is, when using them, you never need to pause to rebalance the tree.
-#
-# RBSTs are based on binary search trees (BST):
-#
-# + A BST  contains nodes with a `key,value` and
-# `left` and `right` pointers to sub-trees. In such trees, all the
-# `left` keys are less than or equal to the local `key` and all the
-# `right` jeys are greater than the local `key`.
-# + Ideally, a BST is _balanced_; i.e. it has the same number of nodes
-# in the `left` and `right` sub-trees. In such a tree, _N_ items can be
-# found in _O(log N)_ time.
-#
-# The RBST stores at each node a small integer, the number of
-# its descendants (counting itself as one). When a key _x_ is to be inserted
-# into a tree that already has _n_ nodes:
-#
-# + The insertion algorithm chooses
-# with probability _1/(n + 1)_ to place _x_ as the new root of the tree.
-# + Otherwise, it calls the insertion procedure recursively to insert _x_
-# within the `left` or `right` subtree (depending on whether its key is less
-# than or greater than the root).
-#
-# The numbers of descendants `n` are used by the algorithm to calculate the
-# necessary probabilities for the random choices at each step.
-#
-# Files
-# =====
-#
-# + This file : [rbst.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/rbst.coffee).
-# + Uses the random number generator  :
-# [rand.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/rand.coffee).
-# + And the standard global definitions of
-#   [globals.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/globals.coffee).
-# + All code in
-#   [one file](https://github.com/timm/coffee-mine/blob/master/build/var/rbst-103).
-#
-# Annotated Source Code
-# =====================
-#
-# Creation
-# --------
-#
-# A new tree contains one node and has nil for the `left` and `right` pointers.
-#
-# Tree Manipulation
-# ------------------
-#
-# Rotating left and right is way to move a sub-node up a tree,
-# while preserving the BST invariant that the left/right keys
-# in the new sub-trees are in the right order.
-#
-# ![left, right rotate](http://upload.wikimedia.org/wikipedia/commons/2/23/Tree_rotation.png)
+###
+ NAME
+====
+
+Rbst
+
+Synopsis
+========
+
+Add 1,000 randomly
+generated key value pairs to a RandomBinaryTree:
+
+    one = -> x R.rand2(1,10000), R.rand2(1,10)
+    b = null
+    for n in [1..1000]
+      thing = one()
+      if not b
+        b = new RandomBinaryTree thing.x, thing.y
+      else
+        b.add thing
+     b.show()
+
+The last line does a pretty print of the generated tree.
+
+Description
+===========
+
+A [random binary search
+tree](http://en.wikipedia.org/wiki/Randomized_binary_search_tree)
+(RBST) is a way to build an (approximately) balanced binary search
+tree.
+
+RBSTs are very simple to code and incrementally maintain their balance.
+That is, when using them, you never need to pause to rebalance the tree.
+
+RBSTs are based on binary search trees (BST):
+
++ A BST  contains nodes with a `key,value` and
+`left` and `right` pointers to sub-trees. In such trees, all the
+`left` keys are less than or equal to the local `key` and all the
+`right` jeys are greater than the local `key`.
++ Ideally, a BST is _balanced_; i.e. it has the same number of nodes
+in the `left` and `right` sub-trees. In such a tree, _N_ items can be
+found in _O(log N)_ time.
+
+The RBST stores at each node a small integer, the number of
+its descendants (counting itself as one). When a key _x_ is to be inserted
+into a tree that already has _n_ nodes:
+
++ The insertion algorithm chooses
+with probability _1/(n + 1)_ to place _x_ as the new root of the tree.
++ Otherwise, it calls the insertion procedure recursively to insert _x_
+within the `left` or `right` subtree (depending on whether its key is less
+than or greater than the root).
+
+The numbers of descendants `n` are used by the algorithm to calculate the
+necessary probabilities for the random choices at each step.
+
+Files
+=====
+
++ This file : [rbst.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/rbst.coffee).
++ Uses the random number generator  :
+[rand.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/rand.coffee).
++ And the standard global definitions of
+  [globals.coffee](https://raw.github.com/timm/coffee-mine/master/build/lib/globals.coffee).
++ All code in
+  [one file](https://github.com/timm/coffee-mine/blob/master/build/var/rbst-103).
+
+Annotated Source Code
+=====================
+
+Creation
+--------
+
+A new tree contains one node and has nil for the `left` and `right` pointers.
+
+Tree Manipulation
+------------------
+
+Rotating left and right is way to move a sub-node up a tree,
+while preserving the BST invariant that the left/right keys
+in the new sub-trees are in the right order.
+
+![left, right rotate](http://upload.wikimedia.org/wikipedia/commons/2/23/Tree_rotation.png)
+###
 class RandomBinaryTree
   constructor: (@key,@value) ->
-    @n = 1
+    @n = null
+    @local = 1
     @left = @right = null
 
 # `RotateR` and `rotateL` is used
@@ -93,7 +96,6 @@ class RandomBinaryTree
 # of that tree.
   rotateL: (h) ->
     x = h.right
-    h.n = x.n = null
     h.right = x.left
     x.left = h
     h.reset(); x.reset();
@@ -108,11 +110,12 @@ class RandomBinaryTree
     x
   reset:() ->
     @n = null
+  update:() ->
+    @n  = @local
+    @n += @left.size()  if @left
+    @n += @right.size() if @right
   size:() ->
-    unless @n
-      @n  = 1
-      @n += @left.size()  if @left
-      @n += @right.size() if @right
+    @update() if @n is null
     @n
 
 # Inserting an Item
@@ -129,13 +132,15 @@ class RandomBinaryTree
   insert: (h,key,val,lt) ->
     if h is null
       return new RandomBinaryTree key,val
-    if R.randf() < (1/(h.n))
+    if R.randf() < (1/(h.size()))
       return @rootInsert h,     key,val,lt
     if lt key,h.key
       h.left   = @insert h.left,key,val,lt
+    else if key is h.key
+      h.local += 1
     else
       h.right  = @insert h.right,key,val,lt
-    h.n +=  1
+    h.reset()
     h
 
   rootInsert: (h,key,val,lt) ->
@@ -144,9 +149,12 @@ class RandomBinaryTree
     if lt key,h.key
       h.left = @rootInsert h.left,  key,val,lt
       h      = @rotateR h
+    else if key is h.key
+      h.local += 1
     else
       h.right = @rootInsert h.right,key,val,lt
       h       = @rotateL h
+    h.reset()
     h
 # `Adds` and `add` are convenience functions
 # for adding pairs of key values.
@@ -169,7 +177,7 @@ class RandomBinaryTree
 # nodes, with an indentation equal
 # to the depth of the node in the tree
   show: (indent="",prefix="=",add="|   ") ->
-    s = "#{indent}#{prefix}#{@key}*n-#{@n} :  #{@value}"
+    s = "#{indent}#{prefix}#{@key} has #{@local} so #{@size()} :  #{@value}"
     show s
     @left.show  indent+add,"<= ",add if @left
     @right.show indent+add,">  ",add if @right
