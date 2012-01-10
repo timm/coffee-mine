@@ -99,14 +99,12 @@ class RandomBinaryTree
     h.right = x.left
     x.left = h
     h.reset(); x.reset();
-    h.size() ; x.size()
     x
   rotateR: (h) ->
     x   = h.left
     h.left = x.right
     x.right = h
     h.reset(); x.reset();
-    h.size() ; x.size()
     x
   reset:() ->
     @n = null
