@@ -133,7 +133,7 @@ class RandomBinaryTree
     if R.randf() < (1/(h.size()))
       return @rootInsert h,     key,val,lt
     if lt key,h.key
-      h.left   = @insert h.left,key,val,lt
+      h.left = @insert h.left,key,val,lt
     else if key is h.key
       h.local += 1
     else
