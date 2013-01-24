@@ -1,7 +1,7 @@
 learning.coffee()
 =================
 
-A data mining toolkit that implements _Occam's knife_ :
+This is a data mining toolkit that implements _Occam's knife_ :
 
 * These learners eagerly and aggressively dump irrelevancies,
 redundancies etcs to learn tiny models.
