@@ -1,0 +1,12 @@
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#rc()
+
+"Plugin 'kchmck/vim-coffee-script'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'jwhitley/vim-literate-coffeescript'
+
+syntax enable
+filetype plugin indent on
